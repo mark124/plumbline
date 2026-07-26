@@ -1,0 +1,75 @@
+name: "Plumbline"
+description: "Check AI-written SQL against your DataHub catalog before it merges."
+branding:
+  icon: "check-circle"
+  color: "blue"
+
+inputs:
+  paths:
+    description: "Files, globs or directories to check."
+    required: false
+    default: "models"
+  server:
+    description: "DataHub GMS URL."
+    required: true
+  token:
+    description: "DataHub access token."
+    required: true
+  platform:
+    description: "Data platform to resolve table names against."
+    required: false
+    default: "snowflake"
+  database:
+    description: "Default database for unqualified table names."
+    required: false
+    default: ""
+  schema:
+    description: "Default schema for unqualified table names."
+    required: false
+    default: ""
+  dialect:
+    description: "SQL dialect to parse with."
+    required: false
+    default: "snowflake"
+  fail-on:
+    description: "Severity that fails the job: error, warn, or never."
+    required: false
+    default: "error"
+
+outputs:
+  report:
+    description: "Path to the markdown report."
+    value: ${{ steps.run.outputs.report }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Install Plumbline
+      shell: bash
+      run: pip install --quiet plumbline
+
+    - name: Run Plumbline
+      id: run
+      shell: bash
+      env:
+        DATAHUB_GMS_URL: ${{ inputs.server }}
+        DATAHUB_GMS_TOKEN: ${{ inputs.token }}
+      run: |
+        args=(check ${{ inputs.paths }} --platform "${{ inputs.platform }}" \
+              --dialect "${{ inputs.dialect }}" --fail-on "${{ inputs.fail-on }}" \
+              --format markdown --out plumbline-report.md)
+        if [ -n "${{ inputs.database }}" ]; then args+=(--database "${{ inputs.database }}"); fi
+        if [ -n "${{ inputs.schema }}" ]; then args+=(--schema "${{ inputs.schema }}"); fi
+        echo "report=plumbline-report.md" >> "$GITHUB_OUTPUT"
+        set +e
+        plumbline "${args[@]}"
+        status=$?
+        # Always publish the report, including when the gate fails. A gate
+        # that fails without showing its reasoning just gets disabled.
+        cat plumbline-report.md >> "$GITHUB_STEP_SUMMARY"
+        exit $status

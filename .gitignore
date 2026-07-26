@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+
+# Reference clones of upstream repos, kept locally for reading only.
+docs/ref-datahub-skills/
+docs/ref-mcp-server/

@@ -1,0 +1,33 @@
+{
+  "catalog": {
+    "tables": 14,
+    "columns": 212,
+    "platform": "snowflake"
+  },
+  "precision": {
+    "valid_cases": 66,
+    "false_positives": 0,
+    "false_positive_rate": 0.0,
+    "examples": []
+  },
+  "recall": {
+    "defective_cases": 59,
+    "caught": 59,
+    "recall": 1.0,
+    "by_kind": {
+      "table_typo": {
+        "caught": 22,
+        "total": 22
+      },
+      "column_invented": {
+        "caught": 21,
+        "total": 21
+      },
+      "column_typo": {
+        "caught": 16,
+        "total": 16
+      }
+    },
+    "missed": []
+  }
+}
