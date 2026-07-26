@@ -48,6 +48,67 @@ def _expand(paths: Sequence[str]) -> List[str]:
     return out
 
 
+def _run_fix_agent(
+    report,
+    statements,
+    catalog,
+    *,
+    server_url,
+    token,
+    model,
+    dialect,
+    database,
+    schema_,
+) -> None:
+    """Ask the agent for repairs, then report what survived verification."""
+    import asyncio
+
+    from .agent import FixAgent, apply_fixes
+
+    if not server_url:
+        raise click.ClickException(
+            "--fix needs an explicit --server (or DATAHUB_GMS_URL) so the MCP "
+            "server can reach the same catalog."
+        )
+
+    kwargs = {"gms_url": server_url, "gms_token": token}
+    if model:
+        kwargs["model"] = model
+    agent = FixAgent(**kwargs)
+
+    all_fixes = []
+    for statement, produced in statements:
+        blocking = [f for f in produced if f.severity.blocking]
+        if not blocking:
+            continue
+        try:
+            fixes = asyncio.run(
+                agent.propose_all(
+                    blocking,
+                    statement,
+                    catalog,
+                    dialect=dialect,
+                    default_db=database,
+                    default_schema=schema_,
+                )
+            )
+        except Exception as exc:  # noqa: BLE001
+            click.echo(f"Fix agent unavailable: {exc}", err=True)
+            return
+        all_fixes.extend(fixes)
+
+    apply_fixes(report, all_fixes)
+
+    accepted = [f for f in all_fixes if f.accepted]
+    click.echo(
+        f"Fix agent: {len(accepted)} of {len(all_fixes)} proposals passed "
+        "re-verification."
+    )
+    for f in all_fixes:
+        if not f.accepted:
+            click.echo(f"  - {f.finding.summary}: {f.reason}")
+
+
 @click.group()
 @click.version_option(package_name="plumbline")
 def main() -> None:
@@ -86,6 +147,20 @@ def main() -> None:
     type=click.Choice(list(ALL_CHECKS)),
     help="Run only these checks. Repeatable. Defaults to all.",
 )
+@click.option(
+    "--fix",
+    is_flag=True,
+    help=(
+        "Ask the agent to propose repairs for blocking findings, via the "
+        "DataHub MCP server. Every proposal is re-checked before it is shown; "
+        "unverified repairs are discarded. Needs ANTHROPIC_API_KEY."
+    ),
+)
+@click.option(
+    "--model",
+    default=None,
+    help="Model for --fix. Defaults to the agent's own default.",
+)
 def check(
     paths,
     server,
@@ -100,6 +175,8 @@ def check(
     out,
     fail_on,
     checks_,
+    fix,
+    model,
 ):
     """Check SQL files against the catalog."""
     files = _expand(paths)
@@ -124,13 +201,17 @@ def check(
     enabled = list(checks_) if checks_ else list(ALL_CHECKS)
 
     report = Report()
+    # Keep each statement alongside the findings it produced, so the fix agent
+    # can be handed the exact text a finding refers to.
+    statements: List = []
     for path in files:
         with open(path, "r", encoding="utf-8") as fh:
             text = fh.read()
         if not text.strip():
             continue
         report.files_checked += 1
-        for statement in split_statements(text, dialect=dialect):
+        for statement, first_line in split_statements(text, dialect=dialect):
+            before = len(report.findings)
             parsed = parse_sql(
                 statement,
                 catalog,
@@ -138,8 +219,25 @@ def check(
                 default_db=database,
                 default_schema=schema_,
                 file=path,
+                line_offset=first_line - 1,
             )
             run_all(parsed, catalog, report, enabled=enabled)
+            produced = report.findings[before:]
+            if produced:
+                statements.append((statement, produced))
+
+    if fix and report.blocking_count:
+        _run_fix_agent(
+            report,
+            statements,
+            catalog,
+            server_url=getattr(graph, "_gms_server", None) or server,
+            token=token,
+            model=model,
+            dialect=dialect,
+            database=database,
+            schema_=schema_,
+        )
 
     rendered = {
         "text": render_text,

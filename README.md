@@ -59,10 +59,33 @@ every finding and every number in this README comes from. We do not fight
 hallucination with more hallucination.
 
 Layer 2 is agentic: for findings that need judgment (which table was meant,
-what is the safe rewrite), an agent using the DataHub MCP server investigates
-and proposes a patch. That patch is handed back to Layer 1 and re-verified. A
-proposed fix that does not pass Layer 1 is never shown as a fix. The agent
-proposes; the deterministic core disposes.
+what is the safe rewrite), an agent investigates and proposes a patch. That
+patch is handed back to Layer 1 and re-verified. The agent proposes; the
+deterministic core disposes.
+
+```
+$ plumbline check models/customer_revenue.sql --fix
+Fix agent: 1 of 1 proposals passed re-verification.
+```
+
+The agent reaches DataHub **only through the official DataHub MCP server** and
+gets no other access. It runs with the server's mutation tools disabled, so it
+can read the catalog and cannot change it.
+
+A proposal is accepted only if both hold:
+
+1. The original defect is gone from the rewritten statement.
+2. The rewrite introduces no new blocking error.
+
+The second condition is the one that matters. Without it, a model that
+"resolves" a bad column by pointing at a different nonexistent table would
+pass. Rejected proposals are reported with the reason and never shown as
+fixes:
+
+```
+Fix agent: 0 of 1 proposals passed re-verification.
+  - Column `order_ttl` does not exist: rejected: the rewrite introduces a new error
+```
 
 ### Severity reflects evidence, not alarm
 
@@ -179,6 +202,9 @@ plumbline check models/ --fail-on never       # report only
 
 # Scoping
 plumbline check models/ --check phantom_column --check pii_propagation
+
+# Propose verified repairs for blocking findings (needs ANTHROPIC_API_KEY)
+plumbline check models/ --fix
 ```
 
 Tables written unqualified need defaults, and a catalog using platform

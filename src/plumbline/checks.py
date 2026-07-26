@@ -220,7 +220,10 @@ def check_pii(parsed: ParsedSql, report: Report) -> None:
     if target_is_marked:
         return
 
-    seen = set()
+    # Group by column name rather than by (table, column). The same PII column
+    # reaching the output from two joined tables is one problem for the reader,
+    # not two, and emitting it twice reads like a bug in the checker.
+    grouped: dict = {}
     for use in parsed.column_uses:
         ref = use.table_ref
         if not ref.exists:
@@ -228,28 +231,37 @@ def check_pii(parsed: ParsedSql, report: Report) -> None:
         col = ref.schema.column(use.column)
         if col is None or not col.is_pii:
             continue
-        key = (ref.urn, col.name.lower())
-        if key in seen:
-            continue
-        seen.add(key)
+        entry = grouped.setdefault(
+            col.name.lower(),
+            {"col": col, "sources": [], "line": use.line, "labels": set()},
+        )
+        entry["labels"].update(col.tags | col.terms)
+        if ref.raw not in [s.raw for s in entry["sources"]]:
+            entry["sources"].append(ref)
+        if entry["line"] is None:
+            entry["line"] = use.line
 
-        target = parsed.out_tables[0]
+    target = parsed.out_tables[0]
+    for entry in grouped.values():
+        col = entry["col"]
+        sources = entry["sources"]
+        origin = " and ".join(f"`{s.raw}`" for s in sources)
         report.add(
             Finding(
                 check=Check.PII_PROPAGATION,
                 severity=Severity.WARN,
                 summary=f"PII column `{col.name}` flows into `{target.raw}`",
                 detail=(
-                    f"`{ref.raw}`.`{col.name}` is tagged "
-                    + ", ".join(sorted(col.tags | col.terms))
+                    f"{origin}.`{col.name}` is tagged "
+                    + ", ".join(sorted(entry["labels"]))
                     + f" in the catalog, and this statement writes it into "
                     f"`{target.raw}`, which carries no such tag. Either tag the "
                     "output, mask the column, or drop it from the select list."
                 ),
                 file=parsed.file,
-                line=use.line,
+                line=entry["line"],
                 subject=col.name,
-                evidence_urn=ref.urn,
+                evidence_urn=sources[0].urn,
             )
         )
 

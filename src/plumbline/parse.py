@@ -18,6 +18,7 @@ import re
 from typing import Dict, List, Optional, Tuple
 
 import sqlglot
+import sqlglot.tokens
 from sqlglot import exp
 from sqlglot.optimizer.qualify_tables import qualify_tables
 from sqlglot.optimizer.scope import build_scope
@@ -105,7 +106,7 @@ class ParsedSql:
         return self.parse_error is None
 
 
-def _line_of(sql: str, token: str) -> Optional[int]:
+def _line_in(sql: str, token: str) -> Optional[int]:
     """Best-effort line number for a token.
 
     sqlglot does not carry reliable source positions through the optimizer, so
@@ -188,9 +189,18 @@ def parse_sql(
     default_db: Optional[str] = None,
     default_schema: Optional[str] = None,
     file: Optional[str] = None,
+    line_offset: int = 0,
 ) -> ParsedSql:
-    """Parse one SQL statement and resolve every reference against the catalog."""
+    """Parse one SQL statement and resolve every reference against the catalog.
+
+    `line_offset` is added to every reported line, so a statement lifted out of
+    the middle of a file still points at the right place in that file.
+    """
     result = ParsedSql(sql=sql, dialect=dialect, file=file)
+
+    def _line_of(text: str, token: str) -> Optional[int]:
+        line = _line_in(text, token)
+        return None if line is None else line + line_offset
 
     try:
         expression = sqlglot.parse_one(sql, dialect=dialect)
@@ -433,11 +443,38 @@ def _extract_joins(sql: str, dialect: str) -> List:
     return out
 
 
-def split_statements(sql: str, dialect: str = "snowflake") -> List[str]:
-    """Split a file into individual statements, tolerating a trailing semicolon."""
+def split_statements(
+    sql: str, dialect: str = "snowflake"
+) -> List[Tuple[str, int]]:
+    """Split a file into statements, returning (text, first_line_number).
+
+    The text is sliced out of the original source rather than re-rendered.
+    Round-tripping through sqlglot's generator would collapse the statement
+    onto a single line, and every finding in the file would then report line
+    1, which makes the report useless for navigating to the problem.
+    """
     try:
-        parsed = sqlglot.parse(sql, dialect=dialect)
+        tokens = sqlglot.tokenize(sql, dialect=dialect)
     except Exception:  # noqa: BLE001
-        return [sql]
-    out = [p.sql(dialect=dialect) for p in parsed if p is not None]
-    return out or [sql]
+        return [(sql, 1)]
+
+    boundaries = [
+        token.end + 1
+        for token in tokens
+        if token.token_type == sqlglot.tokens.TokenType.SEMICOLON
+    ]
+
+    chunks: List[Tuple[str, int]] = []
+    start = 0
+    for end in boundaries + [len(sql)]:
+        if end <= start:
+            continue
+        piece = sql[start:end]
+        if piece.strip():
+            # Line of the first non-whitespace character in this chunk.
+            leading = len(piece) - len(piece.lstrip())
+            line = sql.count("\n", 0, start + leading) + 1
+            chunks.append((piece.strip(), line))
+        start = end
+
+    return chunks or [(sql, 1)]

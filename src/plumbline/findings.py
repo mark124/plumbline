@@ -61,8 +61,12 @@ class Finding:
         evidence_urn: The catalog entity that justifies the finding. This is
             what makes a finding auditable: a reader can open the URN and see
             for themselves.
-        suggestion: Optional proposed replacement, filled in by the agent
-            layer only after the deterministic layer re-verified it.
+        suggestion: A short proposed replacement identifier, produced by the
+            deterministic near-miss check (for example `credit_limit`).
+        fixed_sql: A complete rewritten statement proposed by the agent layer,
+            set only after the deterministic layer re-verified it. Kept apart
+            from `suggestion` because one is a token and the other is a whole
+            statement, and rendering them the same way makes both unreadable.
     """
 
     check: Check
@@ -74,6 +78,7 @@ class Finding:
     subject: Optional[str] = None
     evidence_urn: Optional[str] = None
     suggestion: Optional[str] = None
+    fixed_sql: Optional[str] = None
 
     def to_dict(self) -> Dict[str, Any]:
         d = dataclasses.asdict(self)

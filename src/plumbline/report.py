@@ -83,6 +83,10 @@ def render_text(report: Report) -> str:
                 lines.append(f"      Suggested: {f.suggestion}")
             if f.evidence_urn:
                 lines.append(f"      Evidence: {f.evidence_urn}")
+            if f.fixed_sql:
+                lines.append("      Verified fix:")
+                for sql_line in f.fixed_sql.splitlines():
+                    lines.append(f"        {sql_line}")
             lines.append("")
 
     if report.degraded:
@@ -141,6 +145,19 @@ def render_markdown(report: Report) -> str:
                 out.append(f"  Suggested replacement: `{f.suggestion}`")
             if f.evidence_urn:
                 out.append(f"  Catalog evidence: `{f.evidence_urn}`")
+            if f.fixed_sql:
+                out.append("")
+                out.append(
+                    "  <details><summary>Verified fix (re-checked against the "
+                    "catalog)</summary>"
+                )
+                out.append("")
+                out.append("  ```sql")
+                for sql_line in f.fixed_sql.splitlines():
+                    out.append(f"  {sql_line}")
+                out.append("  ```")
+                out.append("")
+                out.append("  </details>")
             out.append("")
 
     if report.degraded:
