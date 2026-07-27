@@ -203,6 +203,22 @@ def test_blast_radius_lists_downstream_consumers():
     assert "2 downstream consumers" in f[0].summary
 
 
+def test_unreachable_catalog_raises_instead_of_inventing_phantoms():
+    """A DataHub outage must not look like an empty catalog.
+
+    The SDK's resolver swallows transport errors and reports the table as
+    unresolved, which is indistinguishable from absent. If that were trusted,
+    an outage would produce a phantom-table finding for every real table in
+    the file.
+    """
+    from plumbline.catalog import CatalogUnavailable
+
+    catalog = build()
+    catalog.unreachable = True
+    with pytest.raises(CatalogUnavailable):
+        run("SELECT a FROM analytics.public.anything", catalog)
+
+
 def test_parse_failure_is_reported_and_not_silent():
     report = run("SELECT FROM WHERE ((", build())
     f = findings_of(report, Check.PARSE_FAILURE)

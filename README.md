@@ -175,6 +175,45 @@ instance. The join check was then verified **in both directions**: silent on a
 join matching the observed query, and flagging a join on a key pair nobody has
 used. A check that only ever fires is not a check.
 
+### Catalog shapes it has been run against
+
+The showcase datapack is Snowflake, three-part names, uppercase identifiers,
+and a platform instance. Most DataHub instances are none of those, so the
+other shapes were seeded and resolved directly:
+
+| Platform | Name shape | Platform instance | Resolved |
+| --- | --- | --- | --- |
+| postgres | `shopdb.public.users` | none | Yes |
+| mysql | `shopdb.orders` (two-tier) | none | Yes |
+| snowflake | `ANALYTICS_DB.PUBLIC.EVENTS` | none | Yes |
+| bigquery | `myproj.analytics.sessions` | none | Yes |
+
+Phantom columns were caught end to end on both a three-tier platform
+(postgres) and a two-tier one (mysql). Still untested: DataHub Cloud, and any
+catalog large enough for pagination limits to bite.
+
+### When DataHub is unreachable, it refuses to report
+
+This one is worth stating because the obvious implementation is wrong. The
+SDK's schema resolver swallows transport errors and reports the table as
+unresolved, which is indistinguishable from "this table does not exist". Taken
+at face value, a DataHub outage would emit a phantom-table finding for every
+real table in the file, and the run would look like a successful check.
+
+Plumbline confirms the catalog is answering before it believes any negative,
+and if it is not, produces no report at all:
+
+```
+Error: DataHub at http://localhost:8080 is not reachable (ConnectionError).
+Refusing to report, because an unreachable catalog would make every table
+look like it does not exist.
+
+No report was produced. Re-run when DataHub is reachable.
+```
+
+A partial report presented as a complete one is the failure this whole tool
+exists to avoid, so it applies to the tool itself.
+
 ### Cost
 
 The two layers have very different price tags, which is why the fast one is

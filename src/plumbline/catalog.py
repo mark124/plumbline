@@ -16,9 +16,13 @@ from __future__ import annotations
 
 import dataclasses
 import logging
+import time
 from typing import Dict, FrozenSet, List, Optional, Protocol, Tuple
 
 logger = logging.getLogger(__name__)
+
+# How long a successful reachability probe is trusted for.
+REACHABILITY_CACHE_SECONDS = 5.0
 
 # DataHub marks deprecation in more than one way depending on how metadata was
 # ingested, so we check a tag/term name against this set as well as the
@@ -70,6 +74,18 @@ class TableSchema:
     @property
     def pii_columns(self) -> List[ColumnInfo]:
         return [c for c in self.columns.values() if c.is_pii]
+
+
+class CatalogUnavailable(RuntimeError):
+    """Raised when DataHub could not be reached.
+
+    This exists because the SDK's schema resolver swallows transport errors
+    and caches the URN as unresolved, which is indistinguishable from "this
+    table does not exist". Left alone, a DataHub outage would make every table
+    in a file look like a phantom, and the report would present that as a
+    finding about the code. An unreachable catalog is not an empty catalog,
+    and the difference has to be visible.
+    """
 
 
 @dataclasses.dataclass(frozen=True)
@@ -134,6 +150,7 @@ class DataHubCatalog:
         self._sibling_cache: Dict[Tuple, List[Tuple[str, str]]] = {}
         self._query_history_checked = False
         self._query_history_available = False
+        self._last_reachable_at = float("-inf")
 
     # -- tables ---------------------------------------------------------
 
@@ -148,15 +165,32 @@ class DataHubCatalog:
         if key in self._table_cache:
             return self._table_cache[key]
 
-        urn, schema_info = self._schema_resolver.resolve_table_parts(
-            database=database, db_schema=db_schema, table=table
-        )
+        try:
+            urn, schema_info = self._schema_resolver.resolve_table_parts(
+                database=database, db_schema=db_schema, table=table
+            )
+        except CatalogUnavailable:
+            raise
+        except Exception as exc:  # noqa: BLE001
+            # The resolver raises raw transport errors. Establish whether the
+            # catalog is actually down before letting a stack trace out, so
+            # the user gets "DataHub is unreachable" rather than a urllib3
+            # traceback they have to interpret.
+            self._assert_reachable()
+            raise CatalogUnavailable(
+                f"Resolving {'.'.join(p for p in (database, db_schema, table) if p)} "
+                f"failed ({type(exc).__name__}: {exc})."
+            ) from exc
 
         # The resolver always hands back a synthesized URN, even for a table it
         # has never heard of. `schema_info is None` is the only trustworthy
         # signal that the table is absent. Testing `urn is None` here would
         # silently mark every phantom table as real.
         if schema_info is None:
+            # ...but a transport failure looks exactly the same from here, so
+            # confirm the catalog is actually answering before believing a
+            # negative. Only negatives pay for this check.
+            self._assert_reachable()
             result = TableSchema(urn=urn, exists=False, name=table)
             self._table_cache[key] = result
             return result
@@ -183,6 +217,27 @@ class DataHubCatalog:
         )
         self._table_cache[key] = result
         return result
+
+    def _assert_reachable(self) -> None:
+        """Raise CatalogUnavailable if DataHub is not answering.
+
+        Memoized briefly: a file with fifty unresolvable tables should not
+        cost fifty probes, but the window is short enough that an outage
+        starting mid-run is still caught.
+        """
+        now = time.monotonic()
+        if now - self._last_reachable_at < REACHABILITY_CACHE_SECONDS:
+            return
+        try:
+            self._graph.execute_graphql("query plumblinePing { __typename }")
+        except Exception as exc:  # noqa: BLE001
+            raise CatalogUnavailable(
+                f"DataHub at {getattr(self._graph, '_gms_server', 'the configured URL')} "
+                f"is not reachable ({type(exc).__name__}). Refusing to report, "
+                "because an unreachable catalog would make every table look "
+                "like it does not exist."
+            ) from exc
+        self._last_reachable_at = now
 
     def _fetch_governance(self, urn: str):
         """Fetch deprecation status and tag names for a dataset and its columns.

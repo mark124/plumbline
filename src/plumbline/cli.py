@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 import glob
+import logging
 import os
 import sys
 from typing import List, Optional, Sequence
 
 import click
 
-from .catalog import DataHubCatalog
+from .catalog import CatalogUnavailable, DataHubCatalog
 from .checks import ALL_CHECKS, run_all
 from .findings import Report
 from .parse import parse_sql, split_statements
@@ -113,6 +114,13 @@ def _run_fix_agent(
 @click.version_option(package_name="plumbline")
 def main() -> None:
     """Check AI-written data code against the DataHub catalog."""
+    # The DataHub SDK logs full urllib3 tracebacks when it retries a request.
+    # Inside a CI log that buries the one line the reader needs. Plumbline
+    # reports connectivity failures itself, with a message that says what to
+    # do, so the SDK's copy is noise. PLUMBLINE_DEBUG=1 puts it back.
+    if not os.environ.get("PLUMBLINE_DEBUG"):
+        logging.getLogger("datahub").setLevel(logging.CRITICAL)
+        logging.getLogger("urllib3").setLevel(logging.CRITICAL)
 
 
 @main.command()
@@ -212,16 +220,26 @@ def check(
         report.files_checked += 1
         for statement, first_line in split_statements(text, dialect=dialect):
             before = len(report.findings)
-            parsed = parse_sql(
-                statement,
-                catalog,
-                dialect=dialect,
-                default_db=database,
-                default_schema=schema_,
-                file=path,
-                line_offset=first_line - 1,
-            )
-            run_all(parsed, catalog, report, enabled=enabled)
+            try:
+                parsed = parse_sql(
+                    statement,
+                    catalog,
+                    dialect=dialect,
+                    default_db=database,
+                    default_schema=schema_,
+                    file=path,
+                    line_offset=first_line - 1,
+                )
+                run_all(parsed, catalog, report, enabled=enabled)
+            except CatalogUnavailable as exc:
+                # Deliberately not a partial report. Findings gathered before
+                # the catalog went away are fine, but the ones after it would
+                # be fabricated, and a half-checked file presented as a
+                # checked one is worse than no answer.
+                raise click.ClickException(
+                    f"{exc}\n\nNo report was produced. Re-run when DataHub is "
+                    "reachable."
+                ) from exc
             produced = report.findings[before:]
             if produced:
                 statements.append((statement, produced))

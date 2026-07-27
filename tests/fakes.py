@@ -38,6 +38,9 @@ class FakeCatalog:
         self.queries = queries or {}
         self._has_query_history = has_query_history
         self.resolve_calls: List[Tuple] = []
+        # Set to True to simulate DataHub being down, which the real catalog
+        # detects when a lookup comes back empty.
+        self.unreachable = False
 
     def _key(
         self, database: Optional[str], db_schema: Optional[str], table: str
@@ -58,6 +61,10 @@ class FakeCatalog:
 
         cols = self.tables.get(key)
         if cols is None:
+            if self.unreachable:
+                from plumbline.catalog import CatalogUnavailable
+
+                raise CatalogUnavailable("simulated outage")
             return TableSchema(urn=urn, exists=False, name=table)
 
         pii = {c.lower() for c in self.pii_columns.get(key, set())}
