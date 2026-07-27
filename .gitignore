@@ -9,3 +9,8 @@ dist/
 # Reference clones of upstream repos, kept locally for reading only.
 docs/ref-datahub-skills/
 docs/ref-mcp-server/
+
+# Internal planning and vendor-terms notes, not part of the product.
+docs/CONCEPT.md
+docs/fineprint-report.md
+docs/fineprint-findings.json
