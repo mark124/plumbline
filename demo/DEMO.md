@@ -134,6 +134,24 @@ On screen, from the README:
 > four false positives on the first run. Those are fixed and the regression
 > tests are in the repo."
 
+## Shot 6b: it blocks a real pull request (about 25 seconds)
+
+The strongest shot in the video, and it needs no terminal.
+
+Open <https://github.com/mark124/plumbline/pull/1> in a browser. Show the
+checks: **unit tests green, the catalog gate red.** Then scroll to the comment.
+
+> "The tests pass. Nothing is wrong with the code. The gate is red because of
+> what the code believes about the warehouse: a column that does not exist,
+> and a source the organisation deprecated. That comment names the real column
+> and links the catalog entity that proves it."
+
+Worth saying out loud, because a viewer will assume it is faked:
+
+> "There is no mock here. That job stands up a real DataHub inside the runner,
+> loads the public showcase catalog, waits for all 67 datasets to index, and
+> checks against it. Five minutes, and anyone can reproduce it from a fork."
+
 ## Shot 7: close (about 15 seconds)
 
 > "It exits nonzero, so it gates a pull request. It is Apache 2.0. And

@@ -349,6 +349,24 @@ plumbline check models/ \
   --database ORDER_ENTRY_DB --schema ANALYTICS
 ```
 
+## See it block a real pull request
+
+[**Pull request #1**](https://github.com/mark124/plumbline/pull/1) on this
+repository is left open on purpose. The unit tests pass and the catalog gate
+fails, which is the distinction worth seeing: nothing is wrong with the code,
+something is wrong with what the code believes about the warehouse.
+
+The gate is not mocked and nothing is exposed to the internet.
+[`.github/workflows/plumbline-gate.yml`](.github/workflows/plumbline-gate.yml)
+stands up a real DataHub inside the runner, loads the public
+`showcase-ecommerce` datapack, waits for 67 datasets to index, seeds the two
+conditions the datapack lacks, and resolves `models/` against it. The catalog
+lives and dies with the job, so a fork can reproduce the whole thing by
+opening a pull request. It takes about five minutes.
+
+The comment it leaves names the offending column, the real column it meant,
+and the catalog URN that proves it.
+
 ## In CI
 
 ```yaml
