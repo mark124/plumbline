@@ -139,6 +139,29 @@ def test_select_star_is_not_a_phantom(catalog):
     assert r.phantom_columns == []
 
 
+def test_qualified_star_is_not_a_phantom(catalog):
+    """Regression: `o.*` parses as a column literally named `*`.
+
+    Found by red-teaming with valid-but-awkward SQL. Plain `SELECT *` was
+    handled and the qualified form was not, so ordinary queries raised a
+    blocking error.
+    """
+    r = _parse("SELECT o.* FROM analytics.public.orders o", catalog)
+    assert r.ok
+    assert r.phantom_columns == []
+
+
+def test_qualified_star_alongside_a_real_phantom(catalog):
+    """The star must be ignored without suppressing a genuine defect."""
+    sql = """
+    SELECT o.*, o.order_ttl
+    FROM analytics.public.orders o
+    """
+    r = _parse(sql, catalog)
+    assert r.ok
+    assert [c.column for c in r.phantom_columns] == ["order_ttl"]
+
+
 def test_unparseable_sql_reports_error(catalog):
     r = _parse("SELECT FROM WHERE ((", catalog)
     assert not r.ok or r.phantom_columns == []

@@ -91,6 +91,9 @@ def _run_fix_agent(
                     dialect=dialect,
                     default_db=database,
                     default_schema=schema_,
+                    # Everything this statement already produced, so a rewrite
+                    # that adds a problem the original did not have is caught.
+                    baseline=produced,
                 )
             )
         except Exception as exc:  # noqa: BLE001

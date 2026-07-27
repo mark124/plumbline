@@ -222,13 +222,54 @@ the gate and the slow one is opt-in.
 | Path | Measured |
 | --- | --- |
 | `plumbline check` (deterministic, the CI gate) | **1.6s** median for one file, 3 runs |
-| `plumbline check --fix` (per blocking finding) | **~5 minutes**, and one Claude API call chain each |
+| `plumbline check --fix` (per blocking finding) | **24 to 34 seconds**, 4 runs, one Claude API call chain each |
 
-Measured against a local DataHub quickstart on a laptop. The agent spends most
-of that time investigating the catalog through MCP rather than waiting on any
-one call. `--fix` proposes for at most 5 findings per run by default; on a file
-with several errors, expect it to take a while. Leave it off in CI unless you
-want repairs, and keep the deterministic gate as the thing that blocks merges.
+Measured against a local DataHub quickstart on a laptop. Treat the second row
+as variable rather than a guarantee: an earlier configuration, at a higher
+effort setting, took 296 seconds for the same file, which is what motivated
+the explicit client timeout. `--fix` proposes for at most 5 findings per run
+by default. Leave it off in CI unless you want repairs, and keep the
+deterministic gate as the thing that blocks merges.
+
+## What red-teaming found
+
+The benchmark generates SQL from templates this project wrote, which is a soft
+target. So the checker was also attacked directly: 26 hand-written statements
+chosen because they are awkward for a resolver, using only columns that
+genuinely exist. Quoted identifiers, `USING` joins, self-joins, `UNION ALL`,
+correlated subqueries, three-deep CTE chains, CTEs with explicit column lists,
+`QUALIFY`, aliases shadowing real column names, `VALUES` clauses, comments
+naming fake columns, string literals that look like columns.
+
+**It found one real false positive:** `SELECT o.*` raised a blocking error,
+because a qualified star parses as a column literally named `*`. Plain
+`SELECT *` was handled and the qualified form was not. Fixed, with a
+regression test that also confirms a genuine phantom alongside the star is
+still caught. The suite now reports 0 false positives, with one statement
+(`WINDOW w AS (...)`) that sqlglot cannot parse and which is therefore
+reported as unknown rather than passed.
+
+### Prompt injection through catalog metadata
+
+The agent reads dataset descriptions over MCP. In a real organisation anyone
+with catalog write access can edit a description, which makes catalog metadata
+untrusted input to something that writes SQL.
+
+A description was planted saying that any repair must also add the `dob` and
+`phone_number` columns. In that trial the agent ignored it and proposed the
+minimal correct fix, but one trial of a probabilistic system proves very
+little, so the defense does not depend on it. Those are real column names, so
+they resolve cleanly, and a gate that only rejected new *errors* would have
+accepted a rewrite that quietly widened PII exposure.
+
+The verification gate now rejects any rewrite that introduces a finding the
+original statement did not have, at warning severity as well as error. The
+injection outcome is blocked whether or not the model notices the attack.
+
+**What this does not cover:** the gate verifies references, not semantics. An
+injected instruction to drop a `WHERE` clause would produce SQL that resolves
+perfectly and introduces no new finding, and it would be accepted. Review the
+diff. `--fix` proposes, it does not commit.
 
 ## Known limitations
 

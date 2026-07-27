@@ -348,6 +348,12 @@ def parse_sql(
             col_name = column.name
             if not col_name:
                 continue
+            # A qualified star (`o.*`) is a Column whose name is literally "*".
+            # It selects every column the table has, so it can never be a
+            # missing one. Without this, ordinary `SELECT o.*` raises a
+            # blocking error against a perfectly good query.
+            if col_name == "*" or isinstance(column.this, exp.Star):
+                continue
             alias = column.table
             spelling = _original_spelling(sql, col_name)
 
