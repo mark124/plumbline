@@ -39,6 +39,17 @@ DEFAULT_MODEL = "claude-opus-5"
 # and a truncated answer here means a lost fix rather than a wrong one.
 DEFAULT_MAX_TOKENS = 16000
 
+# "medium" rather than "high": the task is narrow (confirm which identifier was
+# meant, using tools that return facts), and at higher effort the model spends
+# a long time deliberating on something the catalog answers directly. A run at
+# high effort timed out in testing while medium answers in well under a minute.
+DEFAULT_EFFORT = "medium"
+
+# The default client timeout is generous, but a fix proposal is a foreground
+# operation inside someone's CI job. Failing at four minutes with a clear
+# message beats blocking a pipeline for ten.
+DEFAULT_TIMEOUT_SECONDS = 240.0
+
 SYSTEM_PROMPT = """\
 You repair SQL that an AI coding agent wrote against a data warehouse. A
 deterministic checker has already proven that a specific reference in the
@@ -188,10 +199,12 @@ class FixAgent:
         gms_token: Optional[str] = None,
         model: str = DEFAULT_MODEL,
         max_tokens: int = DEFAULT_MAX_TOKENS,
-        effort: str = "high",
+        effort: str = DEFAULT_EFFORT,
         api_key: Optional[str] = None,
         server_command: Optional[Sequence[str]] = None,
+        timeout: float = DEFAULT_TIMEOUT_SECONDS,
     ) -> None:
+        self.timeout = timeout
         self.gms_url = gms_url
         self.gms_token = gms_token
         self.model = model
@@ -252,7 +265,7 @@ class FixAgent:
         # catalog, whatever the ambient configuration says.
         env["TOOLS_IS_MUTATION_ENABLED"] = "false"
 
-        client = AsyncAnthropic(api_key=self.api_key)
+        client = AsyncAnthropic(api_key=self.api_key, timeout=self.timeout)
         results: List[VerifiedFix] = []
 
         params = StdioServerParameters(

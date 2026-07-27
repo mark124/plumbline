@@ -155,6 +155,22 @@ column reference. That was a real bug in the checker, found by pointing it at
 real code. It is fixed, and covered by regression tests
 (`test_select_alias_referenced_in_order_by`).
 
+### Cost
+
+The two layers have very different price tags, which is why the fast one is
+the gate and the slow one is opt-in.
+
+| Path | Measured |
+| --- | --- |
+| `plumbline check` (deterministic, the CI gate) | **1.6s** median for one file, 3 runs |
+| `plumbline check --fix` (per blocking finding) | **~5 minutes**, and one Claude API call chain each |
+
+Measured against a local DataHub quickstart on a laptop. The agent spends most
+of that time investigating the catalog through MCP rather than waiting on any
+one call. `--fix` proposes for at most 5 findings per run by default; on a file
+with several errors, expect it to take a while. Leave it off in CI unless you
+want repairs, and keep the deterministic gate as the thing that blocks merges.
+
 ## Known limitations
 
 Stated plainly, because a checker whose blind spots are undocumented is worse
@@ -174,6 +190,10 @@ than one with fewer features.
   a warning.
 - **Column-level PII propagation is checked at the statement level**, not
   through multi-hop lineage.
+- **`--fix` is slow and can time out.** It is minutes per finding, and a run
+  that exceeds the client timeout is reported as "no fix proposed" rather than
+  retried. The deterministic findings are unaffected when that happens: you
+  still get the error, the location, and the nearest-name suggestion.
 
 ## Install
 
