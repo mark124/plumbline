@@ -155,6 +155,26 @@ column reference. That was a real bug in the checker, found by pointing it at
 real code. It is fixed, and covered by regression tests
 (`test_select_alias_referenced_in_order_by`).
 
+### Every check exercised against a live catalog
+
+Unit tests run against an in-memory catalog, which is fast but cannot catch a
+malformed GraphQL query. So each check was also run against a real DataHub:
+
+| Check | Verified live | Notes |
+| --- | --- | --- |
+| Phantom column | Yes | 66/66 valid and 59/59 defective benchmark cases |
+| Phantom table | Yes | Near-miss promotion confirmed on real table names |
+| PII propagation | Yes | Fires on `cust_email`, tagged `Email Address, PII` |
+| Blast radius | Yes | 34 downstream consumers: 19 datasets, 3 dashboards, 12 charts |
+| Deprecated source | Yes, after seeding | The datapack has 0 deprecated assets |
+| Unvetted join | Yes, after seeding | The datapack has 0 query entities |
+
+The last two needed their precondition to exist before they could run at all,
+so a deprecation flag and one `Query` entity were seeded into a local
+instance. The join check was then verified **in both directions**: silent on a
+join matching the observed query, and flagging a join on a key pair nobody has
+used. A check that only ever fires is not a check.
+
 ### Cost
 
 The two layers have very different price tags, which is why the fast one is
