@@ -237,6 +237,58 @@ def test_subquery_with_star_is_not_judged(catalog):
     assert r.derived_phantoms == []
 
 
+def test_byte_order_mark_does_not_break_parsing(catalog):
+    """Windows editors and shells write BOMs by default.
+
+    A leading BOM made the whole statement unparseable, so the file was
+    reported as unchecked for a reason with nothing to do with its SQL.
+    """
+    r = _parse("﻿SELECT order_ttl FROM analytics.public.orders", catalog)
+    assert r.ok, r.parse_error
+    assert [c.column for c in r.phantom_columns] == ["order_ttl"]
+
+
+def test_update_with_a_bad_column_is_caught(catalog):
+    """UPDATE has no SELECT scope, so its columns were silently unchecked."""
+    r = _parse(
+        "UPDATE analytics.public.orders SET order_ttl = 1 WHERE order_id = 2",
+        catalog,
+    )
+    assert r.ok
+    assert [c.column for c in r.phantom_columns] == ["order_ttl"]
+
+
+def test_update_with_good_columns_is_quiet(catalog):
+    r = _parse(
+        "UPDATE analytics.public.orders SET order_total = 1 WHERE order_id = 2",
+        catalog,
+    )
+    assert r.ok
+    assert r.phantom_columns == []
+
+
+def test_delete_with_a_bad_column_is_caught(catalog):
+    r = _parse(
+        "DELETE FROM analytics.public.orders WHERE order_ttl > 5", catalog
+    )
+    assert r.ok
+    assert [c.column for c in r.phantom_columns] == ["order_ttl"]
+
+
+def test_update_touching_two_tables_stays_quiet(catalog):
+    """With a second table in play a bare column is ambiguous.
+
+    Staying silent is the right answer: guessing which table a column belongs
+    to is how a checker starts inventing findings.
+    """
+    sql = (
+        "UPDATE analytics.public.orders SET order_total = c.customer_id "
+        "FROM analytics.public.customers c WHERE c.customer_id = 1"
+    )
+    r = _parse(sql, catalog)
+    assert r.phantom_columns == []
+
+
 def test_output_table_detected(catalog):
     sql = """
     CREATE TABLE analytics.public.order_summary AS

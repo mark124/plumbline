@@ -196,6 +196,12 @@ def parse_sql(
     `line_offset` is added to every reported line, so a statement lifted out of
     the middle of a file still points at the right place in that file.
     """
+    # Strip a byte order mark. The CLI reads files as utf-8-sig so it does not
+    # arrive that way, but this is the public entry point and a caller passing
+    # text straight off a Windows editor should not silently get "could not
+    # parse" for an invisible character.
+    sql = sql.lstrip("﻿")
+
     result = ParsedSql(sql=sql, dialect=dialect, file=file)
 
     def _line_of(text: str, token: str) -> Optional[int]:
@@ -268,6 +274,32 @@ def parse_sql(
                 line=_line_of(sql, name),
             )
         result.out_tables.append(ref)
+
+    # UPDATE and DELETE have no SELECT scope, so the scope walker below never
+    # sees their columns and they were silently unchecked. When such a
+    # statement touches exactly one table every column in it is unambiguous,
+    # which is the only case worth claiming: with a second table in play (an
+    # UPDATE ... FROM, say) a bare column could belong to either, and guessing
+    # is how false positives start.
+    if isinstance(expression, (exp.Update, exp.Delete)):
+        refs = [r for r in by_key.values() if r.exists and r.schema.columns]
+        if len(refs) == 1 and len(by_key) == 1:
+            ref = refs[0]
+            for column in expression.find_all(exp.Column):
+                name = column.name
+                if not name or name == "*" or isinstance(column.this, exp.Star):
+                    continue
+                if ref.schema.has_column(name):
+                    continue
+                use = ColumnUse(
+                    column=_original_spelling(sql, name),
+                    table_ref=ref,
+                    line=_line_of(sql, name),
+                )
+                result.column_uses.append(use)
+                result.phantom_columns.append(use)
+        result.joins = _extract_joins(sql, dialect)
+        return result
 
     # -- 2. bind columns to their source tables -------------------------
     # We deliberately do NOT use sqlglot's full qualify() here. Given a schema,

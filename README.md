@@ -261,6 +261,33 @@ still caught. The suite now reports 0 false positives, with one statement
 (`WINDOW w AS (...)`) that sqlglot cannot parse and which is therefore
 reported as unknown rather than passed.
 
+### A second sweep, over input shapes rather than SQL shapes
+
+Every defect so far had been found by a *new kind* of exercise, never by
+repeating an old one, so a further sweep deliberately attacked categories
+nothing had touched: statement types other than `SELECT`, file encodings and
+line endings, multi-statement files, degenerate files, dialect mismatch, and
+identifiers chosen to confuse a parser.
+
+It found three misses, and no false alarms:
+
+| Found | Status |
+| --- | --- |
+| `UPDATE`/`DELETE` columns were never checked (no `SELECT` scope to walk) | Fixed, with tests |
+| A leading byte order mark made a file unparseable | Fixed, read as `utf-8-sig` |
+| A bad column introduced in a second CTE hop is not caught | Documented below, not fixed |
+
+The BOM one is worth calling out because Windows editors and shells write BOMs
+by default. It was never dangerous, since the file was reported as unparsed
+rather than passed, but a file silently going unchecked for an invisible
+character is a bad way to lose coverage.
+
+Cases that already behaved correctly: `MERGE`, `TRUNCATE`, `CREATE VIEW`,
+recursive CTEs, `EXCEPT`, lateral flatten, semicolons inside strings and
+comments, CRLF line endings, files with no trailing newline, empty files,
+comment-only files, files that are not SQL at all, and a glob matching
+nothing.
+
 ### Prompt injection through catalog metadata
 
 The agent reads dataset descriptions over MCP. In a real organisation anyone
@@ -302,6 +329,12 @@ than one with fewer features.
   a warning.
 - **Column-level PII propagation is checked at the statement level**, not
   through multi-hop lineage.
+- **A bad column introduced in a second CTE hop is missed.** In
+  `WITH a AS (...), b AS (SELECT nope FROM a) SELECT nope FROM b`, `nope` is
+  unqualified and its source is a CTE, so it is treated as opaque and skipped.
+  This is deliberate: with a computed source in scope, an unqualified name
+  could legitimately be anything, and convicting it is how false positives
+  start. A miss, not a false alarm.
 - **`--fix` is slow and can time out.** It is minutes per finding, and a run
   that exceeds the client timeout is reported as "no fix proposed" rather than
   retried. The deterministic findings are unaffected when that happens: you

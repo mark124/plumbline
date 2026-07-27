@@ -216,7 +216,11 @@ def check(
     # can be handed the exact text a finding refers to.
     statements: List = []
     for path in files:
-        with open(path, "r", encoding="utf-8") as fh:
+        # utf-8-sig strips a byte order mark if one is present. Editors and
+        # shells on Windows write them by default, and a leading BOM makes the
+        # whole statement unparseable, so the file would be reported as
+        # unchecked for a reason that has nothing to do with its SQL.
+        with open(path, "r", encoding="utf-8-sig") as fh:
             text = fh.read()
         if not text.strip():
             continue
