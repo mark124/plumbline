@@ -51,7 +51,9 @@ runs:
 
     - name: Install Plumbline
       shell: bash
-      run: pip install --quiet plumbline
+      # Not published to PyPI yet, so install from the repository. Pin to a
+      # tag or SHA instead of a branch once you depend on this in CI.
+      run: pip install --quiet "plumbline @ git+https://github.com/mark124/plumbline@master"
 
     - name: Run Plumbline
       id: run

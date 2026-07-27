@@ -16,6 +16,12 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+# The deterministic checks need nothing beyond the base dependencies. The
+# agent layer does, so it is an extra: `pip install plumbline[fix]`.
+fix = [
+    "anthropic[mcp]>=0.120",
+    "mcp-server-datahub>=0.6",
+]
 dev = ["pytest>=8.0"]
 
 [project.scripts]

@@ -221,10 +221,18 @@ class FixAgent:
         One MCP session is opened for the whole batch, so the catalog
         connection is established once rather than per finding.
         """
-        from anthropic import AsyncAnthropic
-        from anthropic.lib.tools.mcp import async_mcp_tool
-        from mcp import ClientSession, StdioServerParameters
-        from mcp.client.stdio import stdio_client
+        try:
+            from anthropic import AsyncAnthropic
+            from anthropic.lib.tools.mcp import async_mcp_tool
+            from mcp import ClientSession, StdioServerParameters
+            from mcp.client.stdio import stdio_client
+        except ImportError as exc:
+            raise RuntimeError(
+                "The fix agent needs the optional dependencies: "
+                "pip install 'plumbline[fix]'. "
+                f"(missing: {exc.name}). The deterministic checks do not need "
+                "them and are unaffected."
+            ) from exc
 
         targets = [f for f in findings if f.severity is Severity.ERROR][:max_findings]
         if not targets:
