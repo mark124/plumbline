@@ -48,8 +48,17 @@ def check_phantom_columns(parsed: ParsedSql, report: Report) -> None:
     This is the only check that can be certain, and it is the one the
     benchmark measures.
     """
+    # A column named in both the SELECT list and a GROUP BY is one mistake,
+    # not two. Without this, any query that uses a bad identifier more than
+    # once reports it once per occurrence, which reads like a broken checker.
+    seen_columns = set()
+
     for use in parsed.phantom_columns:
         ref = use.table_ref
+        key = (use.column.lower(), ref.urn)
+        if key in seen_columns:
+            continue
+        seen_columns.add(key)
         searched = use.searched
         real_columns = sorted(
             {c.name for t in searched for c in t.schema.columns.values()}
@@ -88,7 +97,12 @@ def check_phantom_columns(parsed: ParsedSql, report: Report) -> None:
             )
         )
 
+    seen_derived = set()
     for derived in parsed.derived_phantoms:
+        key = (derived.column.lower(), derived.source_alias.lower())
+        if key in seen_derived:
+            continue
+        seen_derived.add(key)
         suggestion = _closest(derived.column, derived.available)
         detail = (
             f"`{derived.source_alias}` is defined in this query and returns "

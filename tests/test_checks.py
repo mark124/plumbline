@@ -70,6 +70,31 @@ def test_phantom_column_is_an_error_with_suggestion():
     assert report.exit_code == 1
 
 
+def test_same_bad_column_used_twice_reports_once():
+    """One mistake, one finding.
+
+    A column named in both the SELECT list and the GROUP BY is extremely
+    common, and reporting it per occurrence reads like a broken checker.
+    """
+    sql = """
+    SELECT order_ttl, COUNT(*) AS n
+    FROM analytics.public.orders
+    GROUP BY order_ttl
+    ORDER BY order_ttl
+    """
+    report = run(sql, build())
+    f = findings_of(report, Check.PHANTOM_COLUMN)
+    assert len(f) == 1, [x.summary for x in f]
+    assert f[0].subject == "order_ttl"
+
+
+def test_two_different_bad_columns_still_report_separately():
+    sql = "SELECT order_ttl, cust_nme FROM analytics.public.orders"
+    report = run(sql, build())
+    f = findings_of(report, Check.PHANTOM_COLUMN)
+    assert sorted(x.subject for x in f) == ["cust_nme", "order_ttl"]
+
+
 def test_unknown_table_is_unknown_not_error():
     """The core honesty rule.
 
