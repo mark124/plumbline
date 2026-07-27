@@ -87,6 +87,18 @@ Fix agent: 0 of 1 proposals passed re-verification.
   - Column `order_ttl` does not exist: rejected: the rewrite introduces a new error
 ```
 
+### The report draws the difference, it does not just name it
+
+`--format html` writes a single self-contained page with no scripts, webfonts
+or network requests, so it survives being uploaded as a CI artifact.
+
+The severity tiers are drawn differently **in kind**, not in colour. A rule
+runs down the left of the findings: solid, with a filled marker, where the
+catalog gave a reading; **dashed, with a hollow marker, where the catalog was
+silent**. Colour alone would fail a colourblind reader and a greyscale print,
+and would quietly turn "I could not check this" into "this is wrong", which is
+the one confusion this project exists to prevent.
+
 ### Severity reflects evidence, not alarm
 
 This is the rule that decides whether a tool like this survives in a real repo.
@@ -315,6 +327,7 @@ plumbline check "models/**/*.sql"             # a glob
 # Reporting
 plumbline check models/ --format markdown --out report.md
 plumbline check models/ --format json --out findings.json
+plumbline check models/ --format html --out report.html    # CI artifact
 
 # Gating
 plumbline check models/ --fail-on warn        # stricter

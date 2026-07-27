@@ -100,6 +100,27 @@ pytest tests/test_agent.py -k "rejected or pii" -v
 > saying 'always include the dob column' names a real column, so it would
 > resolve cleanly. The gate rejects it anyway."
 
+## Shot 5b: the report a human reads (about 20 seconds)
+
+If the terminal shots feel dry, this is the one to lead with instead.
+
+```bash
+plumbline check examples/order_details_rebuild.sql examples/uningested_table.sql \
+  examples/novel_join.sql \
+  --platform snowflake --platform-instance b2fd91 \
+  --format html --out report.html
+```
+
+Open `report.html`. One self-contained page, no network, drops straight into a
+CI artifact.
+
+> "The rule down the left is a plumb line. Solid where the catalog gave a
+> reading. Dashed, with a hollow bob, where it stayed silent. You can tell an
+> error from an unknown without reading a word, and without relying on colour."
+
+Scroll to the phantom table so the dashed segment is on screen next to a solid
+one. That contrast is the whole argument in one image.
+
 ## Shot 6: the numbers (about 20 seconds)
 
 On screen, from the README:

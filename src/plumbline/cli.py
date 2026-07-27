@@ -14,7 +14,7 @@ from .catalog import CatalogUnavailable, DataHubCatalog
 from .checks import ALL_CHECKS, run_all
 from .findings import Report
 from .parse import parse_sql, split_statements
-from .report import render_json, render_markdown, render_text
+from .report import render_html, render_json, render_markdown, render_text
 
 
 def _connect(server: Optional[str], token: Optional[str]):
@@ -139,7 +139,7 @@ def main() -> None:
 @click.option(
     "--format",
     "format_",
-    type=click.Choice(["text", "markdown", "json"]),
+    type=click.Choice(["text", "markdown", "json", "html"]),
     default="text",
     show_default=True,
 )
@@ -264,6 +264,7 @@ def check(
         "text": render_text,
         "markdown": render_markdown,
         "json": render_json,
+        "html": render_html,
     }[format_](report)
 
     if out:
