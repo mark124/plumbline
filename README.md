@@ -357,9 +357,26 @@ that fails without showing its reasoning just gets disabled.
 datahub docker quickstart
 datahub datapack load showcase-ecommerce
 
+# The datapack has no deprecated assets and no query history, so two of the
+# six checks have nothing to fire on. This adds exactly those two conditions
+# and is safe to re-run.
+python demo/seed_demo_catalog.py --server http://localhost:8080
+
 python bench/run_bench.py --platform-instance b2fd91 --out bench-results.json
 python bench/real_sql_check.py --platform-instance b2fd91
 pytest
+```
+
+Then try the examples, which are the same ones the demo video walks through:
+
+```bash
+export DATAHUB_GMS_URL=http://localhost:8080
+plumbline check examples/order_details_rebuild.sql \
+  --platform snowflake --platform-instance b2fd91   # 3 findings, exit 1
+plumbline check examples/uningested_table.sql \
+  --platform snowflake --platform-instance b2fd91   # 1 unknown, exit 0
+plumbline check examples/novel_join.sql \
+  --platform snowflake --platform-instance b2fd91   # 1 warning, exit 0
 ```
 
 ## Contributions made upstream while building this
