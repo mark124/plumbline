@@ -184,12 +184,22 @@ def build(
 ) -> Tuple[List[Case], List[Case]]:
     """Return (valid_cases, defective_cases)."""
     rng = random.Random(seed)
-    usable = [t for t in tables if len(t.columns) >= 4]
+    # Sorted, because the catalog hands tables back in search-result order and
+    # a benchmark whose case set depends on how OpenSearch felt that morning
+    # is not a measurement.
+    usable = sorted(
+        (t for t in tables if len(t.columns) >= 4), key=lambda t: t.fqn.lower()
+    )
     valid: List[Case] = []
 
-    for tmpl_name, fn in SINGLE_TABLE_TEMPLATES:
+    for offset, (tmpl_name, fn) in enumerate(SINGLE_TABLE_TEMPLATES):
         for i in range(per_template):
-            t = usable[(i * 7 + hash(tmpl_name)) % len(usable)]
+            # `hash(tmpl_name)` was here. Python randomizes string hashing per
+            # process, so every run of the benchmark chose different tables
+            # and reported a different score for identical code. The seed
+            # above was doing nothing. The template's position gives the same
+            # spread across tables and is actually stable.
+            t = usable[(i * 7 + offset * 3) % len(usable)]
             valid.append(
                 Case(
                     case_id=f"{tmpl_name}-{i}",

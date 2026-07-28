@@ -17,3 +17,6 @@ docs/fineprint-findings.json
 
 # Generated demo output.
 plumbline-report.html
+
+# Throwaway probe scripts. Anything they found that matters lives in tests/.
+scratchpad/

@@ -37,15 +37,47 @@ def _connect(server: Optional[str], token: Optional[str]):
 
 
 def _expand(paths: Sequence[str]) -> List[str]:
-    """Expand file paths and directories into a list of .sql files."""
+    """Expand file paths, directories and globs into a list of .sql files.
+
+    Getting this wrong is a quiet failure: a file that is never opened is
+    never reported on, and the run still ends with "clean". So each rule here
+    errs toward reading a file rather than skipping it.
+    """
     out: List[str] = []
+    seen = set()
+
+    def add(path: str) -> None:
+        # The same file arrives twice more often than you would think: a
+        # changed-files list plus the directory that contains it, or one path
+        # spelled two ways. Checking it twice doubles every finding in it and
+        # inflates the file count in the summary.
+        key = os.path.normcase(os.path.abspath(path))
+        if key in seen:
+            return
+        seen.add(key)
+        out.append(path)
+
     for p in paths:
         if os.path.isdir(p):
-            out.extend(sorted(glob.glob(os.path.join(p, "**", "*.sql"), recursive=True)))
+            # os.walk rather than glob. glob's pattern match is case-sensitive
+            # on Linux, so `*.sql` silently skips a file named QUERY.SQL and
+            # the CI job reports success on a file it never opened.
+            for dirpath, dirs, names in os.walk(p):
+                dirs.sort()
+                for name in sorted(names):
+                    if name.lower().endswith(".sql"):
+                        add(os.path.join(dirpath, name))
+        elif os.path.isfile(p):
+            # Tested before the glob branch. `report[1].sql` is a real
+            # filename and also a valid pattern that matches nothing, and
+            # dropping a named file without a word is the worst outcome here.
+            add(p)
         elif any(ch in p for ch in "*?["):
-            out.extend(sorted(glob.glob(p, recursive=True)))
+            for match in sorted(glob.glob(p, recursive=True)):
+                add(match)
         else:
-            out.append(p)
+            # Does not exist. Kept so the caller can say so by name.
+            add(p)
     return out
 
 

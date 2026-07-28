@@ -289,6 +289,62 @@ def test_update_touching_two_tables_stays_quiet(catalog):
     assert r.phantom_columns == []
 
 
+def test_same_missing_table_in_two_letter_cases_is_one_finding(catalog):
+    """Only the leaf name was case-folded, so the database and schema parts
+    made `ANALYTICS.PUBLIC.ORDRS` a different table from `analytics.public.ordrs`
+    and the same typo was reported twice."""
+    sql = (
+        "SELECT a.x FROM analytics.public.ordrs a "
+        "JOIN ANALYTICS.PUBLIC.ORDRS b ON a.x = b.x"
+    )
+    r = _parse(sql, catalog)
+    assert r.ok
+    assert len(r.tables) == 1
+
+
+def test_quoted_and_upper_case_identifiers_resolve(catalog):
+    r = _parse('SELECT "ORDER_ID" FROM "ANALYTICS"."PUBLIC"."ORDERS"', catalog)
+    assert r.ok
+    assert r.phantom_columns == []
+
+
+def test_deeply_nested_statement_is_reported_not_fatal(catalog):
+    """Past a certain depth sqlglot exhausts the C stack and takes the whole
+    process with it: no traceback, no report, an exit code that reads as
+    infrastructure failure. The depth is measured off the token stream, which
+    is the one stage that does not recurse, before the parser ever runs."""
+    sql = "SELECT order_id FROM analytics.public.orders"
+    for _ in range(200):
+        sql = f"SELECT order_id FROM ({sql}) AS t"
+
+    r = _parse(sql, catalog)
+    assert r.degraded, "an unchecked statement must say so"
+    assert "nests" in r.degraded[0]
+    assert r.phantom_columns == []
+
+
+def test_ordinary_nesting_is_still_checked(catalog):
+    """The guard must not fire on a query anyone would actually write."""
+    sql = "SELECT order_id, order_ttl FROM analytics.public.orders"
+    for _ in range(5):
+        sql = f"SELECT order_id, order_ttl FROM ({sql}) AS t"
+
+    r = _parse(sql, catalog)
+    assert r.degraded == []
+    assert [c.column for c in r.phantom_columns] == ["order_ttl"]
+
+
+def test_a_huge_flat_predicate_is_not_mistaken_for_deep_nesting(catalog):
+    """An ORM emitting a 2000-term IN list is normal, not pathological."""
+    items = ", ".join(str(i) for i in range(2000))
+    r = _parse(
+        f"SELECT order_ttl FROM analytics.public.orders WHERE order_id IN ({items})",
+        catalog,
+    )
+    assert r.degraded == []
+    assert [c.column for c in r.phantom_columns] == ["order_ttl"]
+
+
 def test_output_table_detected(catalog):
     sql = """
     CREATE TABLE analytics.public.order_summary AS

@@ -27,6 +27,22 @@ from .catalog import Catalog, TableSchema
 
 logger = logging.getLogger(__name__)
 
+# sqlglot parses and optimizes by recursion, and on a deeply nested statement
+# it exhausts the C stack rather than raising: the process dies outright, with
+# no traceback, no report, and an exit code that reads as infrastructure
+# failure rather than as a result. Measured on Windows, where the main thread
+# gets a 1 MB stack, the optimizer goes first at 66 to 70 levels of subquery
+# nesting and the parser follows somewhere past 300. Linux has more room but
+# the cliff is the same shape.
+#
+# Tokenizing is the one stage that is iterative; it handled 5000 levels
+# without complaint. So depth is measured off the token stream before anything
+# recursive touches the statement. Forty leaves a wide margin and is far past
+# anything a person or a sane generator writes: nested function calls reach
+# five or ten. Over the limit the statement is reported as unchecked, which is
+# the honest answer and the safe one.
+MAX_NESTING_DEPTH = 40
+
 
 @dataclasses.dataclass
 class TableRef:
@@ -123,6 +139,28 @@ def _line_in(sql: str, token: str) -> Optional[int]:
     return None
 
 
+def _nesting_depth(sql: str, dialect: str) -> int:
+    """Deepest parenthesis nesting in the statement.
+
+    Measured off the token stream rather than the text, so parentheses inside
+    string literals and comments do not count. Tokenizing is iterative and
+    safe at any depth, which is the whole point: this has to be answerable
+    before the recursive machinery runs.
+    """
+    try:
+        tokens = sqlglot.tokenize(sql, dialect=dialect)
+    except Exception:  # noqa: BLE001
+        return 0
+    depth = worst = 0
+    for token in tokens:
+        if token.token_type is sqlglot.tokens.TokenType.L_PAREN:
+            depth += 1
+            worst = max(worst, depth)
+        elif token.token_type is sqlglot.tokens.TokenType.R_PAREN:
+            depth = max(0, depth - 1)
+    return worst
+
+
 def _derived_projection(source) -> Optional[set]:
     """The set of column names a CTE or subquery returns.
 
@@ -181,6 +219,22 @@ def _table_parts(
     return database or None, db_schema or None, name
 
 
+def _table_key(
+    database: Optional[str], db_schema: Optional[str], table: str
+) -> Tuple:
+    """Identity of a table for deduplication within one statement.
+
+    Case-folded across all three parts. `ANALYTICS.PUBLIC.ORDRS` and
+    `analytics.public.ordrs` are one table written twice, and folding only the
+    leaf name (which is what this did) reported the same missing table twice.
+    """
+    return (
+        (database or "").lower() or None,
+        (db_schema or "").lower() or None,
+        table.lower(),
+    )
+
+
 def parse_sql(
     sql: str,
     catalog: Catalog,
@@ -207,6 +261,19 @@ def parse_sql(
     def _line_of(text: str, token: str) -> Optional[int]:
         line = _line_in(text, token)
         return None if line is None else line + line_offset
+
+    # Before the parser runs, not after: parsing is itself recursive and dies
+    # somewhere past 300 levels, while tokenizing survives 5000 without
+    # complaint. Measuring first is the only way to answer this question and
+    # live to report the answer.
+    depth = _nesting_depth(sql, dialect)
+    if depth > MAX_NESTING_DEPTH:
+        result.degraded.append(
+            f"a statement in this file nests {depth} levels deep, past the "
+            f"{MAX_NESTING_DEPTH}-level limit, and was not checked. The limit "
+            "exists because the SQL parser exhausts the stack below it."
+        )
+        return result
 
     try:
         expression = sqlglot.parse_one(sql, dialect=dialect)
@@ -235,7 +302,7 @@ def parse_sql(
             continue
 
         database, db_schema, name = _table_parts(table, default_db, default_schema)
-        key = (database, db_schema, name.lower())
+        key = _table_key(database, db_schema, name)
         if key in by_key:
             continue
 
@@ -260,7 +327,7 @@ def parse_sql(
         if target is None:
             continue
         database, db_schema, name = _table_parts(target, default_db, default_schema)
-        key = (database, db_schema, name.lower())
+        key = _table_key(database, db_schema, name)
         ref = by_key.get(key)
         if ref is None:
             ref = TableRef(
@@ -338,7 +405,7 @@ def parse_sql(
 
     def _ref_for(source: exp.Table) -> Optional[TableRef]:
         database, db_schema, name = _table_parts(source, default_db, default_schema)
-        return by_key.get((database, db_schema, name.lower())) or lookup_by_name.get(
+        return by_key.get(_table_key(database, db_schema, name)) or lookup_by_name.get(
             name.lower()
         )
 

@@ -116,3 +116,46 @@ def test_missing_file_is_a_clean_error(patched, tmp_path):
     res = _run(["check", str(tmp_path / "nope.sql"), *BASE])
     assert res.exit_code != 0
     assert "Not found" in res.output
+
+
+# --- which files actually get opened --------------------------------------
+#
+# Every failure here is silent: a file that is never read is never reported
+# on, and the run still ends with "clean". These were found by handing the
+# expander the paths a real invocation produces rather than tidy ones.
+
+
+def test_uppercase_extension_is_not_skipped(patched, tmp_path):
+    """glob's match is case-sensitive on Linux, so `*.sql` misses QUERY.SQL.
+
+    On a developer's Windows machine this passes and in CI it silently
+    checks nothing, which is the worst possible split.
+    """
+    _write(tmp_path, "SELECT order_ttl FROM analytics.public.orders", "QUERY.SQL")
+    res = _run(["check", str(tmp_path), *BASE])
+    assert res.exit_code == 1, res.output
+    assert "order_ttl" in res.output
+
+
+def test_filename_containing_glob_characters_is_read(patched, tmp_path):
+    """`report[1].sql` is a real filename and a pattern matching nothing."""
+    path = _write(
+        tmp_path, "SELECT order_ttl FROM analytics.public.orders", "report[1].sql"
+    )
+    res = _run(["check", path, *BASE])
+    assert res.exit_code == 1, res.output
+    assert "order_ttl" in res.output
+
+
+def test_the_same_file_twice_is_checked_once(patched, tmp_path):
+    """A changed-files list can name a path the directory arg also covers."""
+    path = _write(tmp_path, "SELECT order_ttl FROM analytics.public.orders")
+    res = _run(["check", path, path, *BASE])
+    assert "1 file(s)" in res.output
+    assert res.output.count("order_ttl` does not exist") == 1
+
+
+def test_a_directory_and_a_file_inside_it_do_not_double_count(patched, tmp_path):
+    _write(tmp_path, "SELECT order_ttl FROM analytics.public.orders", "a.sql")
+    res = _run(["check", str(tmp_path), str(tmp_path / "a.sql"), *BASE])
+    assert "1 file(s)" in res.output
