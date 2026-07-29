@@ -337,6 +337,37 @@ def test_extract_sql_handles_no_text():
     assert _extract_sql("") is None
 
 
+def test_extract_sql_takes_the_last_block_not_the_first():
+    """Models quote the broken input back before presenting the repair.
+
+    Taking the first block extracted the agent's own copy of the bad SQL,
+    which then failed re-verification and was reported as "the agent found no
+    defensible repair" while a good fix sat two paragraphs below. The system
+    prompt asks the model to *finish* with the corrected statement, so the
+    last block is the one it means.
+    """
+    text = (
+        "The statement you gave me was:\n\n"
+        "```sql\nSELECT order_ttl FROM orders\n```\n\n"
+        "`order_ttl` does not exist. Corrected:\n\n"
+        "```sql\nSELECT order_total FROM orders\n```\n"
+    )
+    assert _extract_sql(text) == "SELECT order_total FROM orders"
+
+
+def test_extract_sql_accepts_an_untagged_fence():
+    assert _extract_sql("```\nSELECT 1\n```") == "SELECT 1"
+
+
+def test_extract_sql_prefers_a_tagged_block_over_an_untagged_one():
+    text = "```\nnot sql, just notes\n```\n\n```sql\nSELECT 1\n```"
+    assert _extract_sql(text) == "SELECT 1"
+
+
+def test_extract_sql_accepts_a_tilde_fence():
+    assert _extract_sql("~~~sql\nSELECT 1\n~~~") == "SELECT 1"
+
+
 def test_apply_fixes_only_writes_accepted_repairs(catalog):
     report, finding = first_error(BROKEN, catalog)
     rejected = VerifiedFix(

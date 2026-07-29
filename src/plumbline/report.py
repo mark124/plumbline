@@ -16,6 +16,41 @@ from .findings import Check, Finding, Report, Severity
 
 SEVERITY_ORDER = [Severity.ERROR, Severity.WARN, Severity.UNKNOWN, Severity.INFO]
 
+# Control characters, except tab (\x09) and newline (\x0a). Identifiers are
+# copied out of the user's SQL, and a warehouse will accept a quoted column
+# name containing almost anything, including these.
+_CONTROL = re.compile(r"[\x00-\x08\x0b-\x1f\x7f]")
+
+
+def _visible(text: str) -> str:
+    """Show control characters as escapes instead of executing them.
+
+    A carriage return printed to a terminal returns the cursor to the start of
+    the line, so the next characters overwrite what was just written. A column
+    named `foo\\r` followed by padding can therefore erase the very finding
+    that reports it, and an ESC can recolour or hide the rest of the output. A
+    report that a hostile identifier can edit is not a report.
+
+    Escaped rather than stripped, so the reader can see something odd is
+    there. Newline and tab are left alone: they carry the layout of a
+    multi-line fix block, and they are dangerous only in a field that is
+    supposed to be one line, which `_one_line` handles.
+
+    The JSON output uses neither. It is a data format, it escapes control
+    characters itself, and a consumer needs the true name.
+    """
+    return _CONTROL.sub(lambda m: repr(m.group(0))[1:-1], text or "")
+
+
+def _one_line(text: str) -> str:
+    """`_visible`, plus newlines, for a field that must occupy one line.
+
+    A summary is a list item in Markdown and an aligned row in the terminal.
+    A raw newline inside one ends the item early, so the rest renders as body
+    text at the wrong level and the report looks broken.
+    """
+    return _visible(text).replace("\n", "\\n")
+
 SEVERITY_LABEL = {
     Severity.ERROR: "Error",
     Severity.WARN: "Warning",
@@ -76,15 +111,15 @@ def render_text(report: Report) -> str:
         lines.append("")
         for f in _sorted(report.findings):
             loc = _location(f)
-            head = f"  {SEVERITY_MARK[f.severity]} {f.summary}"
+            head = f"  {SEVERITY_MARK[f.severity]} {_one_line(f.summary)}"
             if loc:
                 head += f"  ({loc})"
             lines.append(head)
-            lines.append(f"      {f.detail}")
+            lines.append(f"      {_one_line(f.detail)}")
             if f.suggestion:
-                lines.append(f"      Suggested: {f.suggestion}")
+                lines.append(f"      Suggested: {_one_line(f.suggestion)}")
             if f.evidence_urn:
-                lines.append(f"      Evidence: {f.evidence_urn}")
+                lines.append(f"      Evidence: {_one_line(f.evidence_urn)}")
             if f.fixed_sql:
                 lines.append("      Verified fix:")
                 for sql_line in f.fixed_sql.splitlines():
@@ -138,15 +173,18 @@ def render_markdown(report: Report) -> str:
         out.append("")
         for f in _sorted(group):
             loc = _location(f)
-            title = f"**{f.summary}**"
+            # A raw newline inside a list item ends the item, so everything
+            # after it renders as body text at the wrong level and the report
+            # looks broken.
+            title = f"**{_one_line(f.summary)}**"
             if loc:
                 title += f" `{loc}`"
             out.append(f"- {title}")
-            out.append(f"  {f.detail}")
+            out.append(f"  {_one_line(f.detail)}")
             if f.suggestion:
-                out.append(f"  Suggested replacement: `{f.suggestion}`")
+                out.append(f"  Suggested replacement: `{_one_line(f.suggestion)}`")
             if f.evidence_urn:
-                out.append(f"  Catalog evidence: `{f.evidence_urn}`")
+                out.append(f"  Catalog evidence: `{_one_line(f.evidence_urn)}`")
             if f.fixed_sql:
                 out.append("")
                 out.append(
@@ -322,7 +360,7 @@ footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule);
 
 
 def _esc(text: str) -> str:
-    return html.escape(text or "", quote=True)
+    return html.escape(_visible(text), quote=True)
 
 
 def _inline(text: str) -> str:

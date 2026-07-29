@@ -382,6 +382,43 @@ opened is never reported on and the run still ends with "clean":
 
 All three fixed, with end-to-end tests through the CLI.
 
+### A fifth sweep: the agent's reply, the output formats, the catalog's answers
+
+Three seams rather than three inputs. Each is a place where this project
+trusts something it does not control.
+
+**Which fenced block is the fix?** `_extract_sql` took the *first* ```` ```sql ````
+block in the model's reply, while the system prompt asks the model to *finish*
+with the corrected statement. A model that quotes the broken input back before
+presenting the repair, which they routinely do, would have its own copy of the
+bad SQL extracted, re-verified, rejected, and reported as "the agent found no
+defensible repair" with a good fix sitting two paragraphs below. A silent
+failure that looks like the model underperforming. The last block now wins,
+untagged and tilde fences are accepted, and a tagged block beats an untagged
+one.
+
+**Identifiers that are hostile to the output rather than the parser.** A
+warehouse accepts a quoted column name containing almost anything, and that
+name is then printed to a terminal, pasted into a GitHub comment, and opened
+in a browser. Twelve such names were run through all four renderers. HTML,
+Markdown and JSON held. The terminal did not: **a carriage return in a column
+name overwrites the line that reports it**, so a crafted identifier could
+erase its own finding, and an ESC could recolour or hide the rest of the
+output. A report its input can edit is not a report. Control characters are
+now shown as escapes rather than executed, while newline and tab are left
+alone so a multi-line fix block keeps its shape.
+
+**What DataHub actually sends back.** Every GraphQL response was walked with
+chained lookups assuming one nesting shape, taken from one version of one
+instance. GraphQL answers a partially failed query with nulls inside `data`
+alongside an `errors` array, so a field the caller cannot read arrives as
+`None` where a dict was expected. Nineteen realistic response shapes were
+tried: **three crashed `resolve_table` outright**, which would have lost every
+phantom-column finding over a tag lookup. `_fetch_governance` already
+documented that it degrades rather than raises; it now does. 17 shapes are
+covered by tests, alongside a well-formed response so the null tolerance
+cannot quietly change what a good answer means.
+
 **What the gate still does not cover:** it compares references and structure,
 not meaning. A rewrite that keeps the same shape and swaps a comparison
 operator, or changes a join key to another real column, resolves perfectly and

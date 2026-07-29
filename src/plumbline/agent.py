@@ -78,7 +78,14 @@ Finish with the complete corrected statement in a single ```sql fenced block.
 If you have no fix, do not include a fenced block at all.
 """
 
-SQL_BLOCK = re.compile(r"```sql\s*\n(.*?)```", re.DOTALL | re.IGNORECASE)
+# Fenced code blocks in the model's reply. Backtick or tilde, three or more,
+# optionally indented, with or without a language tag.
+FENCE = re.compile(
+    r"^[ \t]*(?P<fence>`{3,}|~{3,})[ \t]*(?P<lang>[A-Za-z0-9_+-]*)[ \t]*\r?\n"
+    r"(?P<body>.*?)"
+    r"^[ \t]*(?P=fence)",
+    re.DOTALL | re.MULTILINE,
+)
 
 
 @dataclasses.dataclass
@@ -98,11 +105,32 @@ class VerifiedFix:
 
 
 def _extract_sql(text: str) -> Optional[str]:
-    match = SQL_BLOCK.search(text or "")
-    if not match:
+    """Pull the corrected statement out of the model's reply.
+
+    The **last** fenced block wins, not the first. The system prompt asks the
+    model to finish with the corrected statement, and models routinely quote
+    the broken input back before presenting the repair. Taking the first block
+    extracted the agent's own copy of the bad SQL, which then failed
+    re-verification and was reported as "no defensible repair" while a
+    perfectly good fix sat two paragraphs below it. A silent failure that
+    looked like the model underperforming.
+
+    A block tagged `sql` is preferred; an untagged block is accepted only when
+    there is no tagged one, since models do drop the tag.
+    """
+    blocks = [
+        (m.group("lang").lower(), m.group("body").strip())
+        for m in FENCE.finditer(text or "")
+    ]
+    blocks = [(lang, body) for lang, body in blocks if body]
+    if not blocks:
         return None
-    sql = match.group(1).strip()
-    return sql or None
+
+    tagged = [body for lang, body in blocks if lang == "sql"]
+    if tagged:
+        return tagged[-1]
+    untagged = [body for lang, body in blocks if not lang]
+    return untagged[-1] if untagged else None
 
 
 def _same_defect(a: Finding, b: Finding) -> bool:

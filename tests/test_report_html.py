@@ -8,7 +8,7 @@ from a SQL file, and the evidence tier is encoded in more than colour.
 from __future__ import annotations
 
 from plumbline.findings import Check, Finding, Report, Severity
-from plumbline.report import render_html
+from plumbline.report import render_html, render_json, render_markdown, render_text
 
 
 def _report(*findings: Finding, degraded=(), files=1) -> Report:
@@ -116,3 +116,82 @@ def test_verified_fix_is_rendered_when_present():
     out = render_html(_report(fixed))
     assert "Verified fix" in out
     assert "SELECT order_total FROM t" in out
+
+
+# --- identifiers that are hostile to the output, not to the parser --------
+#
+# A warehouse will accept a quoted column name containing almost anything.
+# The name is then copied into a terminal, a GitHub comment and a browser,
+# each with different rules about what is data and what is instruction.
+
+
+def _named(name: str) -> Report:
+    return _report(
+        Finding(
+            check=Check.PHANTOM_COLUMN,
+            severity=Severity.ERROR,
+            summary=f"Column `{name}` does not exist",
+            detail=f"No column named `{name}`.",
+            subject=name,
+            suggestion=name,
+        )
+    )
+
+
+def test_carriage_return_cannot_overwrite_the_terminal_report():
+    """A CR returns the cursor to the start of the line, so what follows
+    overwrites what was just printed. A column named with one could erase the
+    finding that reports it, which makes the report editable by its input."""
+    out = render_text(_named("hidden\r" + " " * 80))
+    assert "\r" not in out
+    assert "\\r" in out
+
+
+def test_escape_sequences_cannot_repaint_the_terminal():
+    out = render_text(_named("red\x1b[31mshift"))
+    assert "\x1b" not in out
+    assert "\\x1b" in out
+
+
+def test_a_newline_in_an_identifier_does_not_break_the_markdown_bullet():
+    """One finding must render as exactly one list item."""
+    out = render_markdown(_named("two\nlines"))
+    body = out.split("### Error", 1)[1]
+    assert body.count("\n- ") + body.startswith("- ") == 1
+    assert "\\n" in out
+
+
+def test_control_characters_are_escaped_in_html_too():
+    out = render_html(_named("a\x1b[2Jb"))
+    assert "\x1b" not in out
+
+
+def test_json_keeps_the_true_identifier():
+    """The data format must stay faithful: JSON escapes control characters
+    itself, and a consumer needs the real name, not a display form."""
+    import json
+
+    name = "odd\rname"
+    data = json.loads(render_json(_named(name)))
+    assert data["findings"][0]["subject"] == name
+
+
+def test_a_fix_block_keeps_its_newlines():
+    """The escaping must not reach multi-line SQL, which is rendered as a
+    block and needs its line breaks."""
+    fixed = Finding(
+        check=Check.PHANTOM_COLUMN,
+        severity=Severity.ERROR,
+        summary="Column `x` does not exist",
+        detail="d",
+        fixed_sql="SELECT a,\n       b\nFROM t",
+    )
+    text = render_text(_report(fixed))
+    # Each SQL line is indented into the finding, so the check is that the
+    # lines are still separate lines rather than one escaped string.
+    assert [ln.strip() for ln in text.splitlines() if ln.startswith("        ")] == [
+        "SELECT a,",
+        "b",
+        "FROM t",
+    ]
+    assert "\\n" not in render_html(_report(fixed))

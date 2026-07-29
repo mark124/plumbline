@@ -276,28 +276,40 @@ class DataHubCatalog:
             logger.debug("governance lookup failed for %s: %s", urn, exc)
             return False, set(), {}
 
-        ds = (res or {}).get("dataset") or {}
-        deprecated = bool((ds.get("deprecation") or {}).get("deprecated"))
+        # Parsing is inside the guard too, not just the request. GraphQL
+        # answers a partially failed query with nulls in `data` alongside an
+        # `errors` array, so a field the caller cannot read arrives as None
+        # where a dict was expected, and DataHub versions differ on shape.
+        # Letting that AttributeError out would take down `resolve_table`, and
+        # with it every phantom-column finding, over a tag lookup.
+        try:
+            ds = _as_dict(res).get("dataset")
+            ds = _as_dict(ds)
+            deprecated = bool(_as_dict(ds.get("deprecation")).get("deprecated"))
 
-        ds_tags = _tag_names(ds.get("tags")) | _term_names(ds.get("glossaryTerms"))
-        if any(hint in t.lower() for t in ds_tags for hint in DEPRECATION_HINTS):
-            deprecated = True
+            ds_tags = _tag_names(ds.get("tags")) | _term_names(ds.get("glossaryTerms"))
+            if any(hint in t.lower() for t in ds_tags for hint in DEPRECATION_HINTS):
+                deprecated = True
 
-        col_tags: Dict[str, set] = {}
-        for block_key, list_key in (
-            ("schemaMetadata", "fields"),
-            ("editableSchemaMetadata", "editableSchemaFieldInfo"),
-        ):
-            block = ds.get(block_key) or {}
-            for field in block.get(list_key) or []:
-                path = _leaf_field_path(field.get("fieldPath") or "")
-                if not path:
-                    continue
-                labels = _tag_names(field.get("globalTags")) | _term_names(
-                    field.get("glossaryTerms")
-                )
-                if labels:
-                    col_tags.setdefault(path, set()).update(labels)
+            col_tags: Dict[str, set] = {}
+            for block_key, list_key in (
+                ("schemaMetadata", "fields"),
+                ("editableSchemaMetadata", "editableSchemaFieldInfo"),
+            ):
+                block = _as_dict(ds.get(block_key))
+                for field in block.get(list_key) or []:
+                    field = _as_dict(field)
+                    path = _leaf_field_path(field.get("fieldPath") or "")
+                    if not path:
+                        continue
+                    labels = _tag_names(field.get("globalTags")) | _term_names(
+                        field.get("glossaryTerms")
+                    )
+                    if labels:
+                        col_tags.setdefault(path, set()).update(labels)
+        except Exception as exc:  # noqa: BLE001
+            logger.debug("governance response was not the expected shape: %s", exc)
+            return False, set(), {}
 
         return deprecated, ds_tags, col_tags
 
@@ -518,28 +530,36 @@ class DataHubCatalog:
         return self._query_history_available
 
 
-def _tag_names(block) -> set:
+def _as_dict(value) -> Dict:
+    """Return `value` if it is a dict, otherwise an empty one.
+
+    GraphQL can answer with null, and DataHub versions disagree about shape,
+    so `x.get(...)` on a response field is not safe on its own.
+    """
+    return value if isinstance(value, dict) else {}
+
+
+def _labelled_names(block, list_key: str, entry_key: str) -> set:
+    """Pull display names out of a tag or glossary-term edge list."""
     out = set()
-    for t in (block or {}).get("tags") or []:
-        tag = t.get("tag") or {}
-        name = (tag.get("properties") or {}).get("name")
-        if not name and tag.get("urn"):
-            name = tag["urn"].split(":")[-1].rstrip(")")
+    for edge in _as_dict(block).get(list_key) or []:
+        # A null entry inside the list is normal when the caller lacks
+        # permission on that one tag.
+        entity = _as_dict(_as_dict(edge).get(entry_key))
+        name = _as_dict(entity.get("properties")).get("name")
+        if not name and isinstance(entity.get("urn"), str):
+            name = entity["urn"].split(":")[-1].rstrip(")")
         if name:
             out.add(name)
     return out
+
+
+def _tag_names(block) -> set:
+    return _labelled_names(block, "tags", "tag")
 
 
 def _term_names(block) -> set:
-    out = set()
-    for t in (block or {}).get("terms") or []:
-        term = t.get("term") or {}
-        name = (term.get("properties") or {}).get("name")
-        if not name and term.get("urn"):
-            name = term["urn"].split(":")[-1].rstrip(")")
-        if name:
-            out.add(name)
-    return out
+    return _labelled_names(block, "terms", "term")
 
 
 def _leaf_field_path(field_path: str) -> str:
