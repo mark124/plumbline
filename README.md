@@ -23,6 +23,29 @@ Exit code 1. The pull request does not merge. With `--publish`, the verdict
 goes back into DataHub as an assertion on the dataset, so the next agent
 inherits what this run proved instead of rediscovering it.
 
+## Try it in thirty seconds, without a catalog
+
+```bash
+pip install -e .
+plumbline check examples --demo
+```
+
+That is the whole setup. `--demo` reads a snapshot of the public
+`showcase-ecommerce` catalog that ships with this repository, so all six
+checks run and every finding below is real: a missing column, a deprecated
+source, PII crossing into an untagged table, a join nobody has made, and 34
+downstream consumers of the table being rewritten.
+
+This exists because of an honest problem with the tool. Recall is bounded by
+catalog coverage, so pointing Plumbline at a sparse DataHub returns a wall of
+Unknown and looks like it does nothing. That is the tool being careful, and it
+is still a terrible first impression. The snapshot is the same checker reading
+frozen facts: nothing is simulated, and every run says out loud that the
+catalog is not live.
+
+Sample outputs in all four formats are in
+[`docs/samples/`](docs/samples/) if you would rather not run anything.
+
 ## Why this belongs in the code-generation track
 
 Because generation without verification is the open half of that loop. An

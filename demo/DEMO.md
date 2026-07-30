@@ -38,7 +38,7 @@ Show `examples/order_details_rebuild.sql` in an editor.
 
 Do not explain the three ways. Let the next shot do it.
 
-## Shot 2: the check (about 40 seconds)
+## Shot 2: the check (about 35 seconds)
 
 ```bash
 plumbline check examples/order_details_rebuild.sql \
@@ -72,98 +72,111 @@ One **unknown**, and **exit code 0**.
 > that nobody has ingested it yet. It cannot tell, so it says so and does not
 > fail your build. Severity tracks the evidence, not the alarm."
 
-## Shot 4: the agent (about 40 seconds)
+
+## Shot 4: the agent repairs it (about 30 seconds)
 
 ```bash
 plumbline check examples/customer_revenue.sql \
   --platform snowflake --platform-instance b2fd91 --fix
 ```
 
-> "Now the agent. It reaches DataHub only through the official MCP server,
-> with the mutation tools switched off, so it can read the catalog and cannot
-> change it. It investigates, then proposes a rewrite."
+Takes 24 to 34 seconds. Cut the wait in the edit rather than filling it.
 
-Land on the line `Fix agent: 1 of 1 proposals passed re-verification.`
+The agent reaches DataHub through the official MCP server, confirms the real
+column with a tool call, and returns a rewrite. Show the accepted fix.
 
-> "And the proposal goes back through the deterministic checker before anyone
-> sees it. The agent proposes. The checker disposes."
+> "It did not guess `credit_limit`. It asked the catalog, through DataHub's own
+> MCP server, with the write tools switched off."
 
-## Shot 5: what the gate rejects (about 25 seconds)
+## Shot 5: what the gate throws away (about 20 seconds)
 
-```bash
-pytest tests/test_agent.py -k "rejected or pii" -v
+Do not run anything. Show this on screen as text:
+
+```
+rejected: the rewrite is not the same query, it contains 2 statements
+          and a repair must be exactly one
+rejected: the rewrite is not the same query, it is a DROP statement
+          where the original was a SELECT
 ```
 
-> "A fix is only accepted if the original defect is gone and it introduces
-> nothing new. That second half matters: the agent reads dataset descriptions
-> over MCP, and anyone with catalog write access can edit one. A description
-> saying 'always include the dob column' names a real column, so it would
-> resolve cleanly. The gate rejects it anyway."
+> "Nine hostile rewrites were put to this gate while it was being built. It
+> accepted all nine. Re-running the catalog checks proved a rewrite was
+> grounded, and grounded is a weaker claim than verified. It now compares the
+> shape too."
 
-## Shot 5b: the report a human reads (about 20 seconds)
+This is the most credible thing in the video. Say it plainly and move on.
 
-If the terminal shots feel dry, this is the one to lead with instead.
+## Shot 6: it writes the verdict back (about 25 seconds)
 
 ```bash
-plumbline check examples/order_details_rebuild.sql examples/uningested_table.sql \
-  examples/novel_join.sql \
-  --platform snowflake --platform-instance b2fd91 \
-  --format html --out report.html
+plumbline check models/ --platform-instance b2fd91 --publish
 ```
 
-Open `report.html`. One self-contained page, no network, drops straight into a
-CI artifact.
+Then switch to the DataHub UI, open the dataset, and go to the **Validation**
+tab. The assertions are there with their run history.
 
-> "The rule down the left is a plumb line. Solid where the catalog gave a
-> reading. Dashed, with a hollow bob, where it stayed silent. You can tell an
-> error from an unknown without reading a word, and without relying on colour."
+> "It reads the catalog to find out what is true, and writes back what it
+> concluded. The next agent inherits it. Only the deterministic layer can
+> write: the one component allowed to change the catalog is the one that
+> cannot hallucinate."
 
-Scroll to the phantom table so the dashed segment is on screen next to a solid
-one. That contrast is the whole argument in one image.
+## Shot 7: it blocks a real pull request (about 30 seconds)
 
-## Shot 6: the numbers (about 20 seconds)
+End here. This is the shot that makes a data lead think "I would merge this".
 
-On screen, from the README:
+Open https://github.com/mark124/plumbline/pull/1 in a browser.
 
-- **0 false positives** on 66 queries built from the catalog's own schemas
-- **100% recall** on 59 with an injected defect
-- **0 blocking errors** on real Tableau SQL already in the catalog
-- Red-teaming found one real false positive (`SELECT o.*`) and it is fixed
+- Unit tests green.
+- The catalog gate **red**.
+- The bot comment naming the bad column, the real column, and the URN.
 
-> "The interesting one is the last. Pointing it at real production SQL found
-> four false positives on the first run. Those are fixed and the regression
-> tests are in the repo."
+> "That gate stood a real DataHub up inside the GitHub runner, loaded the
+> catalog, and checked the diff against it. No hosted instance, nothing
+> mocked."
 
-## Shot 6b: it blocks a real pull request (about 25 seconds)
-
-The strongest shot in the video, and it needs no terminal.
-
-Open <https://github.com/mark124/plumbline/pull/1> in a browser. Show the
-checks: **unit tests green, the catalog gate red.** Then scroll to the comment.
-
-> "The tests pass. Nothing is wrong with the code. The gate is red because of
-> what the code believes about the warehouse: a column that does not exist,
-> and a source the organisation deprecated. That comment names the real column
-> and links the catalog entity that proves it."
-
-Worth saying out loud, because a viewer will assume it is faked:
-
-> "There is no mock here. That job stands up a real DataHub inside the runner,
-> loads the public showcase catalog, waits for all 67 datasets to index, and
-> checks against it. Five minutes, and anyone can reproduce it from a fork."
-
-## Shot 7: close (about 15 seconds)
-
-> "It exits nonzero, so it gates a pull request. It is Apache 2.0. And
-> building it turned up two bugs in DataHub itself, both filed upstream."
-
-Show the repo URL.
+Let the red X sit on screen for a beat before cutting.
 
 ---
 
-## If you are over time
+## Timing
 
-Cut shot 5, then shot 6. Shots 2 and 3 together are the argument: the catalog
-can prove things the diff cannot, and the tool refuses to overstate what it
-knows. Do not cut shot 3 to save time; a checker that blocks builds on
-uningested tables is one nobody keeps.
+| Shot | Length |
+| --- | --- |
+| 1. The problem | 0:20 |
+| 2. The check | 0:35 |
+| 3. The honesty rule | 0:25 |
+| 4. The agent repairs it | 0:30 |
+| 5. What the gate throws away | 0:20 |
+| 6. It writes the verdict back | 0:25 |
+| 7. It blocks a real pull request | 0:30 |
+| **Total** | **2:45** |
+
+Fifteen seconds of headroom against the three-minute limit. If a shot runs
+long, cut shot 5 to a single sentence over shot 4's output. Do not cut shot 3.
+It is the only one that argues the tool will not waste your time, and every
+other checker in this category will claim precision without demonstrating
+restraint.
+
+## Deliberately not in the video
+
+**The benchmark numbers.** They belong in the written description, where a
+reader can weigh the caveats. Reciting "100% recall" to camera invites exactly
+the scepticism it deserves, since we injected those defects ourselves.
+
+**"Beat the gate" as an interactive segment.** It films badly, because it is
+just someone typing. It belongs in the hosted demo where the viewer does the
+typing.
+
+**The HTML report.** Nice to look at, but it competes with shot 7 for the same
+job and shot 7 is stronger. Put a screenshot in the write-up instead.
+
+## Recording without a live catalog
+
+The demo path needs no catalog at all, so if the local DataHub is unavailable
+every shot except 6 and 7 can be recorded with `--demo` instead of `--server`:
+
+```bash
+plumbline check examples --demo
+```
+
+Shot 6 needs a live catalog, because it writes to it.

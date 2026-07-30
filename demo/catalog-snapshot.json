@@ -1,0 +1,3756 @@
+{
+ "downstreams": {
+  "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details,PROD)": [
+   {
+    "name": "Order Details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry.explore.order_details,PROD)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(tableau,b2fd91.843bf583-900b-f1ba-0532-b5e67a0373dc)"
+   },
+   {
+    "name": "order_history",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_history,PROD)"
+   },
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry-looker.view.order_details,PROD)"
+   },
+   {
+    "name": "datahub_order_entries",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(powerbi,b2fd91.reports.66666666-7777-8888-9999-000000000000)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.ORDER_DETAILS,PROD)"
+   },
+   {
+    "name": "Promotions",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.b980a8c5-28eb-119e-f6ca-4da32732e5be,PROD)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.c067553a-127e-a871-14a0-5f32cb032c78,PROD)"
+   },
+   {
+    "name": "Orders By Day",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f8fb6a0b-7be6-690b-cc45-3c6e0fd2bcde,PROD)"
+   },
+   {
+    "name": "Top Product Category",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.fadbf744-48be-0929-a47c-5786327a3343,PROD)"
+   },
+   {
+    "name": "Orders By Month",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.89f38fd7-058d-b66a-6db0-4f85f105468a)"
+   },
+   {
+    "name": "Popular Products Categories",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.b8c660a8-10ea-e32a-b823-fa655e1c2f43)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e051d978-989f-a329-5458-e01721b05570)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e36d7772-ac4d-4fd0-a893-aec88f3aa13e)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(looker,b2fd91.dashboards.53)"
+   },
+   {
+    "name": "ORDER_HISTORY",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_history,PROD)"
+   },
+   {
+    "name": "Customer Analytics Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Customer_Analytics_Measures,PROD)"
+   },
+   {
+    "name": "Essential KPI Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Essential_KPI_Measures,PROD)"
+   },
+   {
+    "name": "Geographic Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Geographic_Measures,PROD)"
+   },
+   {
+    "name": "Product Perfromance Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Product_Perfromance_Measures,PROD)"
+   },
+   {
+    "name": "Time Inteligence Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Time_Inteligence_Measures,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.37fcfb15-34ae-973a-5ae3-cf63691d48e3,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.4a3af1dd-fd0c-7077-d5fd-aa2fdf87cb23,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.8bfe7483-1c9a-a0e1-ec84-57207dd37a15,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f32082e5-06b8-f46e-9047-4611fffe66b0,PROD)"
+   },
+   {
+    "name": "Popular Products",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.221)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.222)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.223)"
+   },
+   {
+    "name": "Orders by Day",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.224)"
+   },
+   {
+    "name": "Customer Analysis",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.217abe0d5c1cd421c384)"
+   },
+   {
+    "name": "Geographics",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.3f48c0bf859b2d14dcd0)"
+   },
+   {
+    "name": "Executive Summary",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.83a9aaa3207edd6c721e)"
+   },
+   {
+    "name": "DAX Visual",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.85e432543b30346a0507)"
+   },
+   {
+    "name": "ORDER_DETAILS_REPLICA",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details_replica,PROD)"
+   }
+  ],
+  "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.addresses,PROD)": [
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_details,PROD)"
+   },
+   {
+    "name": "addresses",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.order_entry_db.order_entry.addresses,PROD)"
+   },
+   {
+    "name": "Order Details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry.explore.order_details,PROD)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details,PROD)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(tableau,b2fd91.843bf583-900b-f1ba-0532-b5e67a0373dc)"
+   },
+   {
+    "name": "order_history",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_history,PROD)"
+   },
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry-looker.view.order_details,PROD)"
+   },
+   {
+    "name": "datahub_order_entries",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(powerbi,b2fd91.reports.66666666-7777-8888-9999-000000000000)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.ORDER_DETAILS,PROD)"
+   },
+   {
+    "name": "Promotions",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.b980a8c5-28eb-119e-f6ca-4da32732e5be,PROD)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.c067553a-127e-a871-14a0-5f32cb032c78,PROD)"
+   },
+   {
+    "name": "Orders By Day",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f8fb6a0b-7be6-690b-cc45-3c6e0fd2bcde,PROD)"
+   },
+   {
+    "name": "Top Product Category",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.fadbf744-48be-0929-a47c-5786327a3343,PROD)"
+   },
+   {
+    "name": "Orders By Month",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.89f38fd7-058d-b66a-6db0-4f85f105468a)"
+   },
+   {
+    "name": "Popular Products Categories",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.b8c660a8-10ea-e32a-b823-fa655e1c2f43)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e051d978-989f-a329-5458-e01721b05570)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e36d7772-ac4d-4fd0-a893-aec88f3aa13e)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(looker,b2fd91.dashboards.53)"
+   },
+   {
+    "name": "ORDER_HISTORY",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_history,PROD)"
+   },
+   {
+    "name": "Customer Analytics Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Customer_Analytics_Measures,PROD)"
+   },
+   {
+    "name": "Essential KPI Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Essential_KPI_Measures,PROD)"
+   },
+   {
+    "name": "Geographic Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Geographic_Measures,PROD)"
+   },
+   {
+    "name": "Product Perfromance Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Product_Perfromance_Measures,PROD)"
+   },
+   {
+    "name": "Time Inteligence Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Time_Inteligence_Measures,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.37fcfb15-34ae-973a-5ae3-cf63691d48e3,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.4a3af1dd-fd0c-7077-d5fd-aa2fdf87cb23,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.8bfe7483-1c9a-a0e1-ec84-57207dd37a15,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f32082e5-06b8-f46e-9047-4611fffe66b0,PROD)"
+   },
+   {
+    "name": "Popular Products",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.221)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.222)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.223)"
+   },
+   {
+    "name": "Orders by Day",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.224)"
+   },
+   {
+    "name": "Customer Analysis",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.217abe0d5c1cd421c384)"
+   },
+   {
+    "name": "Geographics",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.3f48c0bf859b2d14dcd0)"
+   },
+   {
+    "name": "Executive Summary",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.83a9aaa3207edd6c721e)"
+   },
+   {
+    "name": "DAX Visual",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.85e432543b30346a0507)"
+   },
+   {
+    "name": "ORDER_DETAILS_REPLICA",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details_replica,PROD)"
+   }
+  ],
+  "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.countries,PROD)": [
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_details,PROD)"
+   },
+   {
+    "name": "countries",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.order_entry_db.order_entry.countries,PROD)"
+   },
+   {
+    "name": "Order Details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry.explore.order_details,PROD)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details,PROD)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(tableau,b2fd91.843bf583-900b-f1ba-0532-b5e67a0373dc)"
+   },
+   {
+    "name": "order_history",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_history,PROD)"
+   },
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry-looker.view.order_details,PROD)"
+   },
+   {
+    "name": "datahub_order_entries",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(powerbi,b2fd91.reports.66666666-7777-8888-9999-000000000000)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.ORDER_DETAILS,PROD)"
+   },
+   {
+    "name": "Promotions",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.b980a8c5-28eb-119e-f6ca-4da32732e5be,PROD)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.c067553a-127e-a871-14a0-5f32cb032c78,PROD)"
+   },
+   {
+    "name": "Orders By Day",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f8fb6a0b-7be6-690b-cc45-3c6e0fd2bcde,PROD)"
+   },
+   {
+    "name": "Top Product Category",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.fadbf744-48be-0929-a47c-5786327a3343,PROD)"
+   },
+   {
+    "name": "Orders By Month",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.89f38fd7-058d-b66a-6db0-4f85f105468a)"
+   },
+   {
+    "name": "Popular Products Categories",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.b8c660a8-10ea-e32a-b823-fa655e1c2f43)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e051d978-989f-a329-5458-e01721b05570)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e36d7772-ac4d-4fd0-a893-aec88f3aa13e)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(looker,b2fd91.dashboards.53)"
+   },
+   {
+    "name": "ORDER_HISTORY",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_history,PROD)"
+   },
+   {
+    "name": "Customer Analytics Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Customer_Analytics_Measures,PROD)"
+   },
+   {
+    "name": "Essential KPI Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Essential_KPI_Measures,PROD)"
+   },
+   {
+    "name": "Geographic Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Geographic_Measures,PROD)"
+   },
+   {
+    "name": "Product Perfromance Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Product_Perfromance_Measures,PROD)"
+   },
+   {
+    "name": "Time Inteligence Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Time_Inteligence_Measures,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.37fcfb15-34ae-973a-5ae3-cf63691d48e3,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.4a3af1dd-fd0c-7077-d5fd-aa2fdf87cb23,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.8bfe7483-1c9a-a0e1-ec84-57207dd37a15,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f32082e5-06b8-f46e-9047-4611fffe66b0,PROD)"
+   },
+   {
+    "name": "Popular Products",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.221)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.222)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.223)"
+   },
+   {
+    "name": "Orders by Day",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.224)"
+   },
+   {
+    "name": "Customer Analysis",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.217abe0d5c1cd421c384)"
+   },
+   {
+    "name": "Geographics",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.3f48c0bf859b2d14dcd0)"
+   },
+   {
+    "name": "Executive Summary",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.83a9aaa3207edd6c721e)"
+   },
+   {
+    "name": "DAX Visual",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.85e432543b30346a0507)"
+   },
+   {
+    "name": "ORDER_DETAILS_REPLICA",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details_replica,PROD)"
+   }
+  ],
+  "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.customers,PROD)": [
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_details,PROD)"
+   },
+   {
+    "name": "customers",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.order_entry_db.order_entry.customers,PROD)"
+   },
+   {
+    "name": "Order Details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry.explore.order_details,PROD)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details,PROD)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(tableau,b2fd91.843bf583-900b-f1ba-0532-b5e67a0373dc)"
+   },
+   {
+    "name": "order_history",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_history,PROD)"
+   },
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry-looker.view.order_details,PROD)"
+   },
+   {
+    "name": "datahub_order_entries",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(powerbi,b2fd91.reports.66666666-7777-8888-9999-000000000000)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.ORDER_DETAILS,PROD)"
+   },
+   {
+    "name": "Promotions",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.b980a8c5-28eb-119e-f6ca-4da32732e5be,PROD)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.c067553a-127e-a871-14a0-5f32cb032c78,PROD)"
+   },
+   {
+    "name": "Orders By Day",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f8fb6a0b-7be6-690b-cc45-3c6e0fd2bcde,PROD)"
+   },
+   {
+    "name": "Top Product Category",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.fadbf744-48be-0929-a47c-5786327a3343,PROD)"
+   },
+   {
+    "name": "Orders By Month",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.89f38fd7-058d-b66a-6db0-4f85f105468a)"
+   },
+   {
+    "name": "Popular Products Categories",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.b8c660a8-10ea-e32a-b823-fa655e1c2f43)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e051d978-989f-a329-5458-e01721b05570)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e36d7772-ac4d-4fd0-a893-aec88f3aa13e)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(looker,b2fd91.dashboards.53)"
+   },
+   {
+    "name": "ORDER_HISTORY",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_history,PROD)"
+   },
+   {
+    "name": "Customer Analytics Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Customer_Analytics_Measures,PROD)"
+   },
+   {
+    "name": "Essential KPI Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Essential_KPI_Measures,PROD)"
+   },
+   {
+    "name": "Geographic Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Geographic_Measures,PROD)"
+   },
+   {
+    "name": "Product Perfromance Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Product_Perfromance_Measures,PROD)"
+   },
+   {
+    "name": "Time Inteligence Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Time_Inteligence_Measures,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.37fcfb15-34ae-973a-5ae3-cf63691d48e3,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.4a3af1dd-fd0c-7077-d5fd-aa2fdf87cb23,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.8bfe7483-1c9a-a0e1-ec84-57207dd37a15,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f32082e5-06b8-f46e-9047-4611fffe66b0,PROD)"
+   },
+   {
+    "name": "Popular Products",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.221)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.222)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.223)"
+   },
+   {
+    "name": "Orders by Day",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.224)"
+   },
+   {
+    "name": "Customer Analysis",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.217abe0d5c1cd421c384)"
+   },
+   {
+    "name": "Geographics",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.3f48c0bf859b2d14dcd0)"
+   },
+   {
+    "name": "Executive Summary",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.83a9aaa3207edd6c721e)"
+   },
+   {
+    "name": "DAX Visual",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.85e432543b30346a0507)"
+   },
+   {
+    "name": "ORDER_DETAILS_REPLICA",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details_replica,PROD)"
+   }
+  ],
+  "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.inventories,PROD)": [
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_details,PROD)"
+   },
+   {
+    "name": "inventories",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.order_entry_db.order_entry.inventories,PROD)"
+   },
+   {
+    "name": "Order Details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry.explore.order_details,PROD)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details,PROD)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(tableau,b2fd91.843bf583-900b-f1ba-0532-b5e67a0373dc)"
+   },
+   {
+    "name": "order_history",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_history,PROD)"
+   },
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry-looker.view.order_details,PROD)"
+   },
+   {
+    "name": "datahub_order_entries",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(powerbi,b2fd91.reports.66666666-7777-8888-9999-000000000000)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.ORDER_DETAILS,PROD)"
+   },
+   {
+    "name": "Promotions",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.b980a8c5-28eb-119e-f6ca-4da32732e5be,PROD)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.c067553a-127e-a871-14a0-5f32cb032c78,PROD)"
+   },
+   {
+    "name": "Orders By Day",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f8fb6a0b-7be6-690b-cc45-3c6e0fd2bcde,PROD)"
+   },
+   {
+    "name": "Top Product Category",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.fadbf744-48be-0929-a47c-5786327a3343,PROD)"
+   },
+   {
+    "name": "Orders By Month",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.89f38fd7-058d-b66a-6db0-4f85f105468a)"
+   },
+   {
+    "name": "Popular Products Categories",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.b8c660a8-10ea-e32a-b823-fa655e1c2f43)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e051d978-989f-a329-5458-e01721b05570)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e36d7772-ac4d-4fd0-a893-aec88f3aa13e)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(looker,b2fd91.dashboards.53)"
+   },
+   {
+    "name": "ORDER_HISTORY",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_history,PROD)"
+   },
+   {
+    "name": "Customer Analytics Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Customer_Analytics_Measures,PROD)"
+   },
+   {
+    "name": "Essential KPI Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Essential_KPI_Measures,PROD)"
+   },
+   {
+    "name": "Geographic Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Geographic_Measures,PROD)"
+   },
+   {
+    "name": "Product Perfromance Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Product_Perfromance_Measures,PROD)"
+   },
+   {
+    "name": "Time Inteligence Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Time_Inteligence_Measures,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.37fcfb15-34ae-973a-5ae3-cf63691d48e3,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.4a3af1dd-fd0c-7077-d5fd-aa2fdf87cb23,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.8bfe7483-1c9a-a0e1-ec84-57207dd37a15,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f32082e5-06b8-f46e-9047-4611fffe66b0,PROD)"
+   },
+   {
+    "name": "Popular Products",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.221)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.222)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.223)"
+   },
+   {
+    "name": "Orders by Day",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.224)"
+   },
+   {
+    "name": "Customer Analysis",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.217abe0d5c1cd421c384)"
+   },
+   {
+    "name": "Geographics",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.3f48c0bf859b2d14dcd0)"
+   },
+   {
+    "name": "Executive Summary",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.83a9aaa3207edd6c721e)"
+   },
+   {
+    "name": "DAX Visual",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.85e432543b30346a0507)"
+   },
+   {
+    "name": "ORDER_DETAILS_REPLICA",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details_replica,PROD)"
+   }
+  ],
+  "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.order_items,PROD)": [
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_details,PROD)"
+   },
+   {
+    "name": "order_items",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.order_entry_db.order_entry.order_items,PROD)"
+   },
+   {
+    "name": "Order Details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry.explore.order_details,PROD)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details,PROD)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(tableau,b2fd91.843bf583-900b-f1ba-0532-b5e67a0373dc)"
+   },
+   {
+    "name": "order_history",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_history,PROD)"
+   },
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry-looker.view.order_details,PROD)"
+   },
+   {
+    "name": "datahub_order_entries",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(powerbi,b2fd91.reports.66666666-7777-8888-9999-000000000000)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.ORDER_DETAILS,PROD)"
+   },
+   {
+    "name": "Promotions",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.b980a8c5-28eb-119e-f6ca-4da32732e5be,PROD)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.c067553a-127e-a871-14a0-5f32cb032c78,PROD)"
+   },
+   {
+    "name": "Orders By Day",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f8fb6a0b-7be6-690b-cc45-3c6e0fd2bcde,PROD)"
+   },
+   {
+    "name": "Top Product Category",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.fadbf744-48be-0929-a47c-5786327a3343,PROD)"
+   },
+   {
+    "name": "Orders By Month",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.89f38fd7-058d-b66a-6db0-4f85f105468a)"
+   },
+   {
+    "name": "Popular Products Categories",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.b8c660a8-10ea-e32a-b823-fa655e1c2f43)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e051d978-989f-a329-5458-e01721b05570)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e36d7772-ac4d-4fd0-a893-aec88f3aa13e)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(looker,b2fd91.dashboards.53)"
+   },
+   {
+    "name": "ORDER_HISTORY",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_history,PROD)"
+   },
+   {
+    "name": "Customer Analytics Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Customer_Analytics_Measures,PROD)"
+   },
+   {
+    "name": "Essential KPI Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Essential_KPI_Measures,PROD)"
+   },
+   {
+    "name": "Geographic Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Geographic_Measures,PROD)"
+   },
+   {
+    "name": "Product Perfromance Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Product_Perfromance_Measures,PROD)"
+   },
+   {
+    "name": "Time Inteligence Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Time_Inteligence_Measures,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.37fcfb15-34ae-973a-5ae3-cf63691d48e3,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.4a3af1dd-fd0c-7077-d5fd-aa2fdf87cb23,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.8bfe7483-1c9a-a0e1-ec84-57207dd37a15,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f32082e5-06b8-f46e-9047-4611fffe66b0,PROD)"
+   },
+   {
+    "name": "Popular Products",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.221)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.222)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.223)"
+   },
+   {
+    "name": "Orders by Day",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.224)"
+   },
+   {
+    "name": "Customer Analysis",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.217abe0d5c1cd421c384)"
+   },
+   {
+    "name": "Geographics",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.3f48c0bf859b2d14dcd0)"
+   },
+   {
+    "name": "Executive Summary",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.83a9aaa3207edd6c721e)"
+   },
+   {
+    "name": "DAX Visual",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.85e432543b30346a0507)"
+   },
+   {
+    "name": "ORDER_DETAILS_REPLICA",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details_replica,PROD)"
+   }
+  ],
+  "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.orders,PROD)": [
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_details,PROD)"
+   },
+   {
+    "name": "orders",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.order_entry_db.order_entry.orders,PROD)"
+   },
+   {
+    "name": "Order Details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry.explore.order_details,PROD)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details,PROD)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(tableau,b2fd91.843bf583-900b-f1ba-0532-b5e67a0373dc)"
+   },
+   {
+    "name": "order_history",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_history,PROD)"
+   },
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry-looker.view.order_details,PROD)"
+   },
+   {
+    "name": "datahub_order_entries",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(powerbi,b2fd91.reports.66666666-7777-8888-9999-000000000000)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.ORDER_DETAILS,PROD)"
+   },
+   {
+    "name": "Promotions",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.b980a8c5-28eb-119e-f6ca-4da32732e5be,PROD)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.c067553a-127e-a871-14a0-5f32cb032c78,PROD)"
+   },
+   {
+    "name": "Orders By Day",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f8fb6a0b-7be6-690b-cc45-3c6e0fd2bcde,PROD)"
+   },
+   {
+    "name": "Top Product Category",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.fadbf744-48be-0929-a47c-5786327a3343,PROD)"
+   },
+   {
+    "name": "Orders By Month",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.89f38fd7-058d-b66a-6db0-4f85f105468a)"
+   },
+   {
+    "name": "Popular Products Categories",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.b8c660a8-10ea-e32a-b823-fa655e1c2f43)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e051d978-989f-a329-5458-e01721b05570)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e36d7772-ac4d-4fd0-a893-aec88f3aa13e)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(looker,b2fd91.dashboards.53)"
+   },
+   {
+    "name": "ORDER_HISTORY",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_history,PROD)"
+   },
+   {
+    "name": "Customer Analytics Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Customer_Analytics_Measures,PROD)"
+   },
+   {
+    "name": "Essential KPI Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Essential_KPI_Measures,PROD)"
+   },
+   {
+    "name": "Geographic Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Geographic_Measures,PROD)"
+   },
+   {
+    "name": "Product Perfromance Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Product_Perfromance_Measures,PROD)"
+   },
+   {
+    "name": "Time Inteligence Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Time_Inteligence_Measures,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.37fcfb15-34ae-973a-5ae3-cf63691d48e3,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.4a3af1dd-fd0c-7077-d5fd-aa2fdf87cb23,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.8bfe7483-1c9a-a0e1-ec84-57207dd37a15,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f32082e5-06b8-f46e-9047-4611fffe66b0,PROD)"
+   },
+   {
+    "name": "Popular Products",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.221)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.222)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.223)"
+   },
+   {
+    "name": "Orders by Day",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.224)"
+   },
+   {
+    "name": "Customer Analysis",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.217abe0d5c1cd421c384)"
+   },
+   {
+    "name": "Geographics",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.3f48c0bf859b2d14dcd0)"
+   },
+   {
+    "name": "Executive Summary",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.83a9aaa3207edd6c721e)"
+   },
+   {
+    "name": "DAX Visual",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.85e432543b30346a0507)"
+   },
+   {
+    "name": "ORDER_DETAILS_REPLICA",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details_replica,PROD)"
+   }
+  ],
+  "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.product_categories,PROD)": [
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_details,PROD)"
+   },
+   {
+    "name": "product_categories",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.order_entry_db.order_entry.product_categories,PROD)"
+   },
+   {
+    "name": "Order Details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry.explore.order_details,PROD)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details,PROD)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(tableau,b2fd91.843bf583-900b-f1ba-0532-b5e67a0373dc)"
+   },
+   {
+    "name": "order_history",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_history,PROD)"
+   },
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry-looker.view.order_details,PROD)"
+   },
+   {
+    "name": "datahub_order_entries",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(powerbi,b2fd91.reports.66666666-7777-8888-9999-000000000000)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.ORDER_DETAILS,PROD)"
+   },
+   {
+    "name": "Promotions",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.b980a8c5-28eb-119e-f6ca-4da32732e5be,PROD)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.c067553a-127e-a871-14a0-5f32cb032c78,PROD)"
+   },
+   {
+    "name": "Orders By Day",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f8fb6a0b-7be6-690b-cc45-3c6e0fd2bcde,PROD)"
+   },
+   {
+    "name": "Top Product Category",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.fadbf744-48be-0929-a47c-5786327a3343,PROD)"
+   },
+   {
+    "name": "Orders By Month",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.89f38fd7-058d-b66a-6db0-4f85f105468a)"
+   },
+   {
+    "name": "Popular Products Categories",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.b8c660a8-10ea-e32a-b823-fa655e1c2f43)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e051d978-989f-a329-5458-e01721b05570)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e36d7772-ac4d-4fd0-a893-aec88f3aa13e)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(looker,b2fd91.dashboards.53)"
+   },
+   {
+    "name": "ORDER_HISTORY",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_history,PROD)"
+   },
+   {
+    "name": "Customer Analytics Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Customer_Analytics_Measures,PROD)"
+   },
+   {
+    "name": "Essential KPI Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Essential_KPI_Measures,PROD)"
+   },
+   {
+    "name": "Geographic Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Geographic_Measures,PROD)"
+   },
+   {
+    "name": "Product Perfromance Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Product_Perfromance_Measures,PROD)"
+   },
+   {
+    "name": "Time Inteligence Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Time_Inteligence_Measures,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.37fcfb15-34ae-973a-5ae3-cf63691d48e3,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.4a3af1dd-fd0c-7077-d5fd-aa2fdf87cb23,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.8bfe7483-1c9a-a0e1-ec84-57207dd37a15,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f32082e5-06b8-f46e-9047-4611fffe66b0,PROD)"
+   },
+   {
+    "name": "Popular Products",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.221)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.222)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.223)"
+   },
+   {
+    "name": "Orders by Day",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.224)"
+   },
+   {
+    "name": "Customer Analysis",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.217abe0d5c1cd421c384)"
+   },
+   {
+    "name": "Geographics",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.3f48c0bf859b2d14dcd0)"
+   },
+   {
+    "name": "Executive Summary",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.83a9aaa3207edd6c721e)"
+   },
+   {
+    "name": "DAX Visual",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.85e432543b30346a0507)"
+   },
+   {
+    "name": "ORDER_DETAILS_REPLICA",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details_replica,PROD)"
+   }
+  ],
+  "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.products,PROD)": [
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_details,PROD)"
+   },
+   {
+    "name": "products",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.order_entry_db.order_entry.products,PROD)"
+   },
+   {
+    "name": "Order Details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry.explore.order_details,PROD)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details,PROD)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(tableau,b2fd91.843bf583-900b-f1ba-0532-b5e67a0373dc)"
+   },
+   {
+    "name": "order_history",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_history,PROD)"
+   },
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry-looker.view.order_details,PROD)"
+   },
+   {
+    "name": "datahub_order_entries",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(powerbi,b2fd91.reports.66666666-7777-8888-9999-000000000000)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.ORDER_DETAILS,PROD)"
+   },
+   {
+    "name": "Promotions",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.b980a8c5-28eb-119e-f6ca-4da32732e5be,PROD)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.c067553a-127e-a871-14a0-5f32cb032c78,PROD)"
+   },
+   {
+    "name": "Orders By Day",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f8fb6a0b-7be6-690b-cc45-3c6e0fd2bcde,PROD)"
+   },
+   {
+    "name": "Top Product Category",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.fadbf744-48be-0929-a47c-5786327a3343,PROD)"
+   },
+   {
+    "name": "Orders By Month",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.89f38fd7-058d-b66a-6db0-4f85f105468a)"
+   },
+   {
+    "name": "Popular Products Categories",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.b8c660a8-10ea-e32a-b823-fa655e1c2f43)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e051d978-989f-a329-5458-e01721b05570)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e36d7772-ac4d-4fd0-a893-aec88f3aa13e)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(looker,b2fd91.dashboards.53)"
+   },
+   {
+    "name": "ORDER_HISTORY",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_history,PROD)"
+   },
+   {
+    "name": "Customer Analytics Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Customer_Analytics_Measures,PROD)"
+   },
+   {
+    "name": "Essential KPI Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Essential_KPI_Measures,PROD)"
+   },
+   {
+    "name": "Geographic Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Geographic_Measures,PROD)"
+   },
+   {
+    "name": "Product Perfromance Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Product_Perfromance_Measures,PROD)"
+   },
+   {
+    "name": "Time Inteligence Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Time_Inteligence_Measures,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.37fcfb15-34ae-973a-5ae3-cf63691d48e3,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.4a3af1dd-fd0c-7077-d5fd-aa2fdf87cb23,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.8bfe7483-1c9a-a0e1-ec84-57207dd37a15,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f32082e5-06b8-f46e-9047-4611fffe66b0,PROD)"
+   },
+   {
+    "name": "Popular Products",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.221)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.222)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.223)"
+   },
+   {
+    "name": "Orders by Day",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.224)"
+   },
+   {
+    "name": "Customer Analysis",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.217abe0d5c1cd421c384)"
+   },
+   {
+    "name": "Geographics",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.3f48c0bf859b2d14dcd0)"
+   },
+   {
+    "name": "Executive Summary",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.83a9aaa3207edd6c721e)"
+   },
+   {
+    "name": "DAX Visual",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.85e432543b30346a0507)"
+   },
+   {
+    "name": "ORDER_DETAILS_REPLICA",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details_replica,PROD)"
+   }
+  ],
+  "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.promotions,PROD)": [
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_details,PROD)"
+   },
+   {
+    "name": "promotions",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.order_entry_db.order_entry.promotions,PROD)"
+   },
+   {
+    "name": "Order Details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry.explore.order_details,PROD)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details,PROD)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(tableau,b2fd91.843bf583-900b-f1ba-0532-b5e67a0373dc)"
+   },
+   {
+    "name": "order_history",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_history,PROD)"
+   },
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry-looker.view.order_details,PROD)"
+   },
+   {
+    "name": "datahub_order_entries",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(powerbi,b2fd91.reports.66666666-7777-8888-9999-000000000000)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.ORDER_DETAILS,PROD)"
+   },
+   {
+    "name": "Promotions",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.b980a8c5-28eb-119e-f6ca-4da32732e5be,PROD)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.c067553a-127e-a871-14a0-5f32cb032c78,PROD)"
+   },
+   {
+    "name": "Orders By Day",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f8fb6a0b-7be6-690b-cc45-3c6e0fd2bcde,PROD)"
+   },
+   {
+    "name": "Top Product Category",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.fadbf744-48be-0929-a47c-5786327a3343,PROD)"
+   },
+   {
+    "name": "Orders By Month",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.89f38fd7-058d-b66a-6db0-4f85f105468a)"
+   },
+   {
+    "name": "Popular Products Categories",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.b8c660a8-10ea-e32a-b823-fa655e1c2f43)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e051d978-989f-a329-5458-e01721b05570)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e36d7772-ac4d-4fd0-a893-aec88f3aa13e)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(looker,b2fd91.dashboards.53)"
+   },
+   {
+    "name": "ORDER_HISTORY",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_history,PROD)"
+   },
+   {
+    "name": "Customer Analytics Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Customer_Analytics_Measures,PROD)"
+   },
+   {
+    "name": "Essential KPI Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Essential_KPI_Measures,PROD)"
+   },
+   {
+    "name": "Geographic Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Geographic_Measures,PROD)"
+   },
+   {
+    "name": "Product Perfromance Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Product_Perfromance_Measures,PROD)"
+   },
+   {
+    "name": "Time Inteligence Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Time_Inteligence_Measures,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.37fcfb15-34ae-973a-5ae3-cf63691d48e3,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.4a3af1dd-fd0c-7077-d5fd-aa2fdf87cb23,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.8bfe7483-1c9a-a0e1-ec84-57207dd37a15,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f32082e5-06b8-f46e-9047-4611fffe66b0,PROD)"
+   },
+   {
+    "name": "Popular Products",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.221)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.222)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.223)"
+   },
+   {
+    "name": "Orders by Day",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.224)"
+   },
+   {
+    "name": "Customer Analysis",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.217abe0d5c1cd421c384)"
+   },
+   {
+    "name": "Geographics",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.3f48c0bf859b2d14dcd0)"
+   },
+   {
+    "name": "Executive Summary",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.83a9aaa3207edd6c721e)"
+   },
+   {
+    "name": "DAX Visual",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.85e432543b30346a0507)"
+   },
+   {
+    "name": "ORDER_DETAILS_REPLICA",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details_replica,PROD)"
+   }
+  ],
+  "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.regions,PROD)": [
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_details,PROD)"
+   },
+   {
+    "name": "regions",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.order_entry_db.order_entry.regions,PROD)"
+   },
+   {
+    "name": "Order Details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry.explore.order_details,PROD)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details,PROD)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(tableau,b2fd91.843bf583-900b-f1ba-0532-b5e67a0373dc)"
+   },
+   {
+    "name": "order_history",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_history,PROD)"
+   },
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry-looker.view.order_details,PROD)"
+   },
+   {
+    "name": "datahub_order_entries",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(powerbi,b2fd91.reports.66666666-7777-8888-9999-000000000000)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.ORDER_DETAILS,PROD)"
+   },
+   {
+    "name": "Promotions",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.b980a8c5-28eb-119e-f6ca-4da32732e5be,PROD)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.c067553a-127e-a871-14a0-5f32cb032c78,PROD)"
+   },
+   {
+    "name": "Orders By Day",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f8fb6a0b-7be6-690b-cc45-3c6e0fd2bcde,PROD)"
+   },
+   {
+    "name": "Top Product Category",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.fadbf744-48be-0929-a47c-5786327a3343,PROD)"
+   },
+   {
+    "name": "Orders By Month",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.89f38fd7-058d-b66a-6db0-4f85f105468a)"
+   },
+   {
+    "name": "Popular Products Categories",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.b8c660a8-10ea-e32a-b823-fa655e1c2f43)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e051d978-989f-a329-5458-e01721b05570)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e36d7772-ac4d-4fd0-a893-aec88f3aa13e)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(looker,b2fd91.dashboards.53)"
+   },
+   {
+    "name": "ORDER_HISTORY",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_history,PROD)"
+   },
+   {
+    "name": "Customer Analytics Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Customer_Analytics_Measures,PROD)"
+   },
+   {
+    "name": "Essential KPI Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Essential_KPI_Measures,PROD)"
+   },
+   {
+    "name": "Geographic Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Geographic_Measures,PROD)"
+   },
+   {
+    "name": "Product Perfromance Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Product_Perfromance_Measures,PROD)"
+   },
+   {
+    "name": "Time Inteligence Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Time_Inteligence_Measures,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.37fcfb15-34ae-973a-5ae3-cf63691d48e3,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.4a3af1dd-fd0c-7077-d5fd-aa2fdf87cb23,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.8bfe7483-1c9a-a0e1-ec84-57207dd37a15,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f32082e5-06b8-f46e-9047-4611fffe66b0,PROD)"
+   },
+   {
+    "name": "Popular Products",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.221)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.222)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.223)"
+   },
+   {
+    "name": "Orders by Day",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.224)"
+   },
+   {
+    "name": "Customer Analysis",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.217abe0d5c1cd421c384)"
+   },
+   {
+    "name": "Geographics",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.3f48c0bf859b2d14dcd0)"
+   },
+   {
+    "name": "Executive Summary",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.83a9aaa3207edd6c721e)"
+   },
+   {
+    "name": "DAX Visual",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.85e432543b30346a0507)"
+   },
+   {
+    "name": "ORDER_DETAILS_REPLICA",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details_replica,PROD)"
+   }
+  ],
+  "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.warehouses,PROD)": [
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_details,PROD)"
+   },
+   {
+    "name": "warehouses",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.order_entry_db.order_entry.warehouses,PROD)"
+   },
+   {
+    "name": "Order Details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry.explore.order_details,PROD)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details,PROD)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(tableau,b2fd91.843bf583-900b-f1ba-0532-b5e67a0373dc)"
+   },
+   {
+    "name": "order_history",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,b2fd91.ORDER_ENTRY_DB.analytics.order_history,PROD)"
+   },
+   {
+    "name": "order_details",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:looker,b2fd91.order-entry-looker.view.order_details,PROD)"
+   },
+   {
+    "name": "datahub_order_entries",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(powerbi,b2fd91.reports.66666666-7777-8888-9999-000000000000)"
+   },
+   {
+    "name": "ORDER_DETAILS",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.ORDER_DETAILS,PROD)"
+   },
+   {
+    "name": "Promotions",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.b980a8c5-28eb-119e-f6ca-4da32732e5be,PROD)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.c067553a-127e-a871-14a0-5f32cb032c78,PROD)"
+   },
+   {
+    "name": "Orders By Day",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f8fb6a0b-7be6-690b-cc45-3c6e0fd2bcde,PROD)"
+   },
+   {
+    "name": "Top Product Category",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.fadbf744-48be-0929-a47c-5786327a3343,PROD)"
+   },
+   {
+    "name": "Orders By Month",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.89f38fd7-058d-b66a-6db0-4f85f105468a)"
+   },
+   {
+    "name": "Popular Products Categories",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.b8c660a8-10ea-e32a-b823-fa655e1c2f43)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e051d978-989f-a329-5458-e01721b05570)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(tableau,b2fd91.e36d7772-ac4d-4fd0-a893-aec88f3aa13e)"
+   },
+   {
+    "name": "Order Entry Dashboard",
+    "type": "DASHBOARD",
+    "urn": "urn:li:dashboard:(looker,b2fd91.dashboards.53)"
+   },
+   {
+    "name": "ORDER_HISTORY",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_history,PROD)"
+   },
+   {
+    "name": "Customer Analytics Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Customer_Analytics_Measures,PROD)"
+   },
+   {
+    "name": "Essential KPI Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Essential_KPI_Measures,PROD)"
+   },
+   {
+    "name": "Geographic Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Geographic_Measures,PROD)"
+   },
+   {
+    "name": "Product Perfromance Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Product_Perfromance_Measures,PROD)"
+   },
+   {
+    "name": "Time Inteligence Measures",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:powerbi,b2fd91.datahub_order_entries.Time_Inteligence_Measures,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.37fcfb15-34ae-973a-5ae3-cf63691d48e3,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.4a3af1dd-fd0c-7077-d5fd-aa2fdf87cb23,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.8bfe7483-1c9a-a0e1-ec84-57207dd37a15,PROD)"
+   },
+   {
+    "name": "Custom SQL Query",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:tableau,b2fd91.f32082e5-06b8-f46e-9047-4611fffe66b0,PROD)"
+   },
+   {
+    "name": "Popular Products",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.221)"
+   },
+   {
+    "name": "Promotions",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.222)"
+   },
+   {
+    "name": "Order Mode",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.223)"
+   },
+   {
+    "name": "Orders by Day",
+    "type": "CHART",
+    "urn": "urn:li:chart:(looker,b2fd91.dashboard_elements.224)"
+   },
+   {
+    "name": "Customer Analysis",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.217abe0d5c1cd421c384)"
+   },
+   {
+    "name": "Geographics",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.3f48c0bf859b2d14dcd0)"
+   },
+   {
+    "name": "Executive Summary",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.83a9aaa3207edd6c721e)"
+   },
+   {
+    "name": "DAX Visual",
+    "type": "CHART",
+    "urn": "urn:li:chart:(powerbi,b2fd91.pages.66666666-7777-8888-9999-000000000000.85e432543b30346a0507)"
+   },
+   {
+    "name": "ORDER_DETAILS_REPLICA",
+    "type": "DATASET",
+    "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details_replica,PROD)"
+   }
+  ]
+ },
+ "env": "PROD",
+ "platform": "snowflake",
+ "platform_instance": "b2fd91",
+ "queries": {
+  "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details_replica,PROD)": [
+   "SELECT o.order_id, c.cust_email\nFROM ORDER_ENTRY_DB.ORDER_ENTRY.ORDERS o\nJOIN ORDER_ENTRY_DB.ORDER_ENTRY.CUSTOMERS c\n  ON o.customer_id = c.customer_id",
+   "SELECT o.order_id, c.cust_email\nFROM ORDER_ENTRY_DB.ORDER_ENTRY.ORDERS o\nJOIN ORDER_ENTRY_DB.ORDER_ENTRY.CUSTOMERS c\n  ON o.customer_id = c.customer_id"
+  ],
+  "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.orders,PROD)": [
+   "SELECT o.order_id, c.cust_email\nFROM ORDER_ENTRY_DB.ORDER_ENTRY.ORDERS o\nJOIN ORDER_ENTRY_DB.ORDER_ENTRY.CUSTOMERS c\n  ON o.customer_id = c.customer_id",
+   "SELECT o.order_id, c.cust_email\nFROM ORDER_ENTRY_DB.ORDER_ENTRY.ORDERS o\nJOIN ORDER_ENTRY_DB.ORDER_ENTRY.CUSTOMERS c\n  ON o.customer_id = c.customer_id"
+  ]
+ },
+ "source": "DataHub showcase-ecommerce datapack",
+ "tables": {
+  "order_entry_db.analytics.order_details": {
+   "columns": {
+    "billing_address_line1": {
+     "name": "billing_address_line1",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "billing_address_line2": {
+     "name": "billing_address_line2",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "billing_country": {
+     "name": "billing_country",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "billing_region": {
+     "name": "billing_region",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "billing_town_city": {
+     "name": "billing_town_city",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "billing_zipcode": {
+     "name": "billing_zipcode",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "category_id": {
+     "name": "category_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "category_name": {
+     "name": "category_name",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "condition": {
+     "name": "condition",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "cost_of_delivery": {
+     "name": "cost_of_delivery",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "cust_email": {
+     "name": "cust_email",
+     "tags": [
+      "Email Address",
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "cust_first_name": {
+     "name": "cust_first_name",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "cust_last_name": {
+     "name": "cust_last_name",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "customer_class": {
+     "name": "customer_class",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "customer_id": {
+     "name": "customer_id",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "delivery_status": {
+     "name": "delivery_status",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(11)"
+    },
+    "delivery_type": {
+     "name": "delivery_type",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "discount_amount": {
+     "name": "discount_amount",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "discount_percent": {
+     "name": "discount_percent",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "dispatch_date": {
+     "name": "dispatch_date",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "estimated_delivery": {
+     "name": "estimated_delivery",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "gift_wrap": {
+     "name": "gift_wrap",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "line_item_id": {
+     "name": "line_item_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "line_total": {
+     "name": "line_total",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "list_price": {
+     "name": "list_price",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "order_date": {
+     "name": "order_date",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "order_id": {
+     "name": "order_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "order_mode": {
+     "name": "order_mode",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "order_status": {
+     "name": "order_status",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "order_total": {
+     "name": "order_total",
+     "tags": [
+      "Order Total"
+     ],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "payment_method_code": {
+     "name": "payment_method_code",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "phone_number": {
+     "name": "phone_number",
+     "tags": [
+      "PII",
+      "Phone Number"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "product_description": {
+     "name": "product_description",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "product_id": {
+     "name": "product_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "product_name": {
+     "name": "product_name",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "product_status": {
+     "name": "product_status",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "promotion_description": {
+     "name": "promotion_description",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "promotion_id": {
+     "name": "promotion_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "promotion_name": {
+     "name": "promotion_name",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "quantity": {
+     "name": "quantity",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "quantity_on_hand": {
+     "name": "quantity_on_hand",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "return_date": {
+     "name": "return_date",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "return_status": {
+     "name": "return_status",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(12)"
+    },
+    "shipping_address_line1": {
+     "name": "shipping_address_line1",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "shipping_address_line2": {
+     "name": "shipping_address_line2",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "shipping_country": {
+     "name": "shipping_country",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "shipping_region": {
+     "name": "shipping_region",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "shipping_town_city": {
+     "name": "shipping_town_city",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "shipping_zipcode": {
+     "name": "shipping_zipcode",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "stock_status": {
+     "name": "stock_status",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(11)"
+    },
+    "unit_price": {
+     "name": "unit_price",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "updated_at": {
+     "name": "updated_at",
+     "tags": [],
+     "terms": [],
+     "type": "TIMESTAMP_LTZ"
+    },
+    "wait_till_complete_yn": {
+     "name": "wait_till_complete_yn",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "warehouse_id": {
+     "name": "warehouse_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "warehouse_name": {
+     "name": "warehouse_name",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    }
+   },
+   "deprecated": false,
+   "tags": [
+    "Order Total",
+    "PII",
+    "Revenue by Customer Class",
+    "SOC2 Auditable",
+    "\ud83d\udcb2 Large Table",
+    "\ud83d\udcc8 Most Queried"
+   ],
+   "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details,PROD)"
+  },
+  "order_entry_db.analytics.order_details_replica": {
+   "columns": {
+    "billing_address_line1": {
+     "name": "billing_address_line1",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "billing_address_line2": {
+     "name": "billing_address_line2",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "billing_country": {
+     "name": "billing_country",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "billing_region": {
+     "name": "billing_region",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "billing_town_city": {
+     "name": "billing_town_city",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "billing_zipcode": {
+     "name": "billing_zipcode",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "category_id": {
+     "name": "category_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "category_name": {
+     "name": "category_name",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "condition": {
+     "name": "condition",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "cost_of_delivery": {
+     "name": "cost_of_delivery",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "cust_email": {
+     "name": "cust_email",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "cust_first_name": {
+     "name": "cust_first_name",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "cust_last_name": {
+     "name": "cust_last_name",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "customer_class": {
+     "name": "customer_class",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "customer_id": {
+     "name": "customer_id",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "delivery_status": {
+     "name": "delivery_status",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(11)"
+    },
+    "delivery_type": {
+     "name": "delivery_type",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "discount_amount": {
+     "name": "discount_amount",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "discount_percent": {
+     "name": "discount_percent",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "dispatch_date": {
+     "name": "dispatch_date",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "estimated_delivery": {
+     "name": "estimated_delivery",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "gift_wrap": {
+     "name": "gift_wrap",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "line_item_id": {
+     "name": "line_item_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "line_total": {
+     "name": "line_total",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "list_price": {
+     "name": "list_price",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "order_date": {
+     "name": "order_date",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "order_id": {
+     "name": "order_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "order_mode": {
+     "name": "order_mode",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "order_status": {
+     "name": "order_status",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "order_total": {
+     "name": "order_total",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "payment_method_code": {
+     "name": "payment_method_code",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "phone_number": {
+     "name": "phone_number",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "product_description": {
+     "name": "product_description",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "product_id": {
+     "name": "product_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "product_name": {
+     "name": "product_name",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "product_status": {
+     "name": "product_status",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "promotion_description": {
+     "name": "promotion_description",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "promotion_id": {
+     "name": "promotion_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "promotion_name": {
+     "name": "promotion_name",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "quantity": {
+     "name": "quantity",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "quantity_on_hand": {
+     "name": "quantity_on_hand",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "return_date": {
+     "name": "return_date",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "return_status": {
+     "name": "return_status",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(12)"
+    },
+    "shipping_address_line1": {
+     "name": "shipping_address_line1",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "shipping_address_line2": {
+     "name": "shipping_address_line2",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "shipping_country": {
+     "name": "shipping_country",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "shipping_region": {
+     "name": "shipping_region",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "shipping_town_city": {
+     "name": "shipping_town_city",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "shipping_zipcode": {
+     "name": "shipping_zipcode",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "stock_status": {
+     "name": "stock_status",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(11)"
+    },
+    "unit_price": {
+     "name": "unit_price",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "updated_at": {
+     "name": "updated_at",
+     "tags": [],
+     "terms": [],
+     "type": "TIMESTAMP_LTZ"
+    },
+    "wait_till_complete_yn": {
+     "name": "wait_till_complete_yn",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "warehouse_id": {
+     "name": "warehouse_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "warehouse_name": {
+     "name": "warehouse_name",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    }
+   },
+   "deprecated": true,
+   "tags": [],
+   "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_details_replica,PROD)"
+  },
+  "order_entry_db.analytics.order_history": {
+   "columns": {
+    "as_of_date": {
+     "name": "as_of_date",
+     "tags": [],
+     "terms": [],
+     "type": "DATE"
+    },
+    "customer_id": {
+     "name": "customer_id",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "order_id": {
+     "name": "order_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "order_status": {
+     "name": "order_status",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "order_total": {
+     "name": "order_total",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    }
+   },
+   "deprecated": false,
+   "tags": [
+    "PII",
+    "\ud83d\udcb2 Large Table"
+   ],
+   "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.analytics.order_history,PROD)"
+  },
+  "order_entry_db.order_entry.addresses": {
+   "columns": {
+    "address_id": {
+     "name": "address_id",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "address_line1": {
+     "name": "address_line1",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "address_line2": {
+     "name": "address_line2",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "country_id": {
+     "name": "country_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "customer_id": {
+     "name": "customer_id",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "date_created": {
+     "name": "date_created",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "region_id": {
+     "name": "region_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "town_city": {
+     "name": "town_city",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "zipcode": {
+     "name": "zipcode",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    }
+   },
+   "deprecated": false,
+   "tags": [
+    "PII",
+    "\ud83d\udcb2 Large Table"
+   ],
+   "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.addresses,PROD)"
+  },
+  "order_entry_db.order_entry.countries": {
+   "columns": {
+    "country_code": {
+     "name": "country_code",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "country_id": {
+     "name": "country_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "country_name": {
+     "name": "country_name",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "nls_territory": {
+     "name": "nls_territory",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    }
+   },
+   "deprecated": false,
+   "tags": [
+    "PII",
+    "\ud83d\udcb2 Large Table"
+   ],
+   "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.countries,PROD)"
+  },
+  "order_entry_db.order_entry.customers": {
+   "columns": {
+    "account_mgr_id": {
+     "name": "account_mgr_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "address_line1": {
+     "name": "address_line1",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "address_line2": {
+     "name": "address_line2",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "address_line3": {
+     "name": "address_line3",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "country_id": {
+     "name": "country_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "credit_limit": {
+     "name": "credit_limit",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "cust_email": {
+     "name": "cust_email",
+     "tags": [
+      "Email Address",
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "cust_first_name": {
+     "name": "cust_first_name",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "cust_last_name": {
+     "name": "cust_last_name",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "customer_class": {
+     "name": "customer_class",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "customer_id": {
+     "name": "customer_id",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "customer_since": {
+     "name": "customer_since",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "dob": {
+     "name": "dob",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "mailshot": {
+     "name": "mailshot",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "nls_language": {
+     "name": "nls_language",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "nls_territory": {
+     "name": "nls_territory",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "partner_mailshot": {
+     "name": "partner_mailshot",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "phone_number": {
+     "name": "phone_number",
+     "tags": [
+      "PII",
+      "Phone Number"
+     ],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "region_id": {
+     "name": "region_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "suggestions": {
+     "name": "suggestions",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "town_city": {
+     "name": "town_city",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "zipcode": {
+     "name": "zipcode",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    }
+   },
+   "deprecated": false,
+   "tags": [
+    "Order Total",
+    "PII",
+    "Revenue by Customer Class",
+    "SOC2 Auditable",
+    "\ud83d\udcb2 Large Table",
+    "\ud83d\udcc8 Most Queried"
+   ],
+   "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.customers,PROD)"
+  },
+  "order_entry_db.order_entry.inventories": {
+   "columns": {
+    "max_stock_level": {
+     "name": "max_stock_level",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "product_id": {
+     "name": "product_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "quantity_on_hand": {
+     "name": "quantity_on_hand",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "reorder_quantity": {
+     "name": "reorder_quantity",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "restock_level": {
+     "name": "restock_level",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "warehouse_id": {
+     "name": "warehouse_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    }
+   },
+   "deprecated": false,
+   "tags": [
+    "PII",
+    "\ud83d\udcb2 Large Table"
+   ],
+   "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.inventories,PROD)"
+  },
+  "order_entry_db.order_entry.order_items": {
+   "columns": {
+    "condition": {
+     "name": "condition",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "dispatch_date": {
+     "name": "dispatch_date",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "estimated_delivery": {
+     "name": "estimated_delivery",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "gift_wrap": {
+     "name": "gift_wrap",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "line_item_id": {
+     "name": "line_item_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "order_id": {
+     "name": "order_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "product_id": {
+     "name": "product_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "quantity": {
+     "name": "quantity",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "return_date": {
+     "name": "return_date",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "supplier_id": {
+     "name": "supplier_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "unit_price": {
+     "name": "unit_price",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    }
+   },
+   "deprecated": false,
+   "tags": [
+    "Order Total",
+    "PII",
+    "Revenue by Customer Class",
+    "\ud83d\udcb2 Large Table"
+   ],
+   "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.order_items,PROD)"
+  },
+  "order_entry_db.order_entry.orders": {
+   "columns": {
+    "billing_address_id": {
+     "name": "billing_address_id",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "cost_of_delivery": {
+     "name": "cost_of_delivery",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "customer_id": {
+     "name": "customer_id",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "delivery_address_id": {
+     "name": "delivery_address_id",
+     "tags": [
+      "PII"
+     ],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "delivery_type": {
+     "name": "delivery_type",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "order_date": {
+     "name": "order_date",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "order_id": {
+     "name": "order_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "order_mode": {
+     "name": "order_mode",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "order_status": {
+     "name": "order_status",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "order_total": {
+     "name": "order_total",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "payment_method_code": {
+     "name": "payment_method_code",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "promotion_id": {
+     "name": "promotion_id",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "sales_rep_id": {
+     "name": "sales_rep_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "wait_till_complete_yn": {
+     "name": "wait_till_complete_yn",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "warehouse_id": {
+     "name": "warehouse_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    }
+   },
+   "deprecated": false,
+   "tags": [
+    "Order Total",
+    "PII",
+    "Revenue by Customer Class",
+    "\ud83d\udcb2 Large Table",
+    "\ud83d\udcc8 Most Queried"
+   ],
+   "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.orders,PROD)"
+  },
+  "order_entry_db.order_entry.product_categories": {
+   "columns": {
+    "category_description": {
+     "name": "category_description",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "category_id": {
+     "name": "category_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "category_name": {
+     "name": "category_name",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "parent_category_id": {
+     "name": "parent_category_id",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    }
+   },
+   "deprecated": false,
+   "tags": [
+    "PII",
+    "\ud83d\udcb2 Large Table"
+   ],
+   "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.product_categories,PROD)"
+  },
+  "order_entry_db.order_entry.products": {
+   "columns": {
+    "catalog_url": {
+     "name": "catalog_url",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "category_id": {
+     "name": "category_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "date_added": {
+     "name": "date_added",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "list_price": {
+     "name": "list_price",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "min_price": {
+     "name": "min_price",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "product_description": {
+     "name": "product_description",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "product_id": {
+     "name": "product_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "product_name": {
+     "name": "product_name",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "product_status": {
+     "name": "product_status",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "supplier_id": {
+     "name": "supplier_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "warranty_period": {
+     "name": "warranty_period",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "weight_class": {
+     "name": "weight_class",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    }
+   },
+   "deprecated": false,
+   "tags": [
+    "PII",
+    "\ud83d\udcb2 Large Table",
+    "\ud83d\udcc8 Most Queried"
+   ],
+   "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.products,PROD)"
+  },
+  "order_entry_db.order_entry.promotions": {
+   "columns": {
+    "promotion_cost": {
+     "name": "promotion_cost",
+     "tags": [],
+     "terms": [],
+     "type": "FLOAT"
+    },
+    "promotion_description": {
+     "name": "promotion_description",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "promotion_end_date": {
+     "name": "promotion_end_date",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "promotion_id": {
+     "name": "promotion_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "promotion_name": {
+     "name": "promotion_name",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "promotion_start_date": {
+     "name": "promotion_start_date",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    }
+   },
+   "deprecated": false,
+   "tags": [
+    "No Sample Values",
+    "PII",
+    "\ud83d\udcb2 Large Table"
+   ],
+   "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.promotions,PROD)"
+  },
+  "order_entry_db.order_entry.regions": {
+   "columns": {
+    "country_id": {
+     "name": "country_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "nls_language": {
+     "name": "nls_language",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "region_id": {
+     "name": "region_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "region_name": {
+     "name": "region_name",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    }
+   },
+   "deprecated": false,
+   "tags": [
+    "PII",
+    "\ud83d\udcb2 Large Table"
+   ],
+   "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.regions,PROD)"
+  },
+  "order_entry_db.order_entry.warehouses": {
+   "columns": {
+    "location_id": {
+     "name": "location_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "warehouse_id": {
+     "name": "warehouse_id",
+     "tags": [],
+     "terms": [],
+     "type": "NUMBER(38,0)"
+    },
+    "warehouse_name": {
+     "name": "warehouse_name",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    },
+    "wh_geo_location": {
+     "name": "wh_geo_location",
+     "tags": [],
+     "terms": [],
+     "type": "VARCHAR(16777216)"
+    }
+   },
+   "deprecated": false,
+   "tags": [
+    "Order Total",
+    "PII",
+    "Revenue by Customer Class",
+    "\ud83d\udcb2 Large Table"
+   ],
+   "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,b2fd91.order_entry_db.order_entry.warehouses,PROD)"
+  }
+ },
+ "taken_at": "2026-07-30"
+}

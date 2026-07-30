@@ -205,6 +205,22 @@ def main() -> None:
     help="Model for --fix. Defaults to the agent's own default.",
 )
 @click.option(
+    "--demo",
+    is_flag=True,
+    help=(
+        "Check against the bundled snapshot of the public showcase catalog "
+        "instead of a live DataHub. Same checker, same checks, same report; "
+        "only the source of the facts changes. Use it to see the tool work "
+        "before you have a catalog of your own to point it at."
+    ),
+)
+@click.option(
+    "--snapshot",
+    type=click.Path(dir_okay=False, exists=True),
+    default=None,
+    help="Check against a specific snapshot file. Implies --demo.",
+)
+@click.option(
     "--publish",
     is_flag=True,
     help=(
@@ -237,6 +253,8 @@ def check(
     checks_,
     fix,
     model,
+    demo,
+    snapshot,
     publish,
     run_url,
 ):
@@ -249,17 +267,42 @@ def check(
     if missing:
         raise click.ClickException(f"Not found: {', '.join(missing)}")
 
-    try:
-        graph = _connect(server, token)
-    except Exception as exc:  # noqa: BLE001
-        raise click.ClickException(
-            f"Could not connect to DataHub: {exc}\n"
-            "Set --server (or DATAHUB_GMS_URL), or run `datahub init` first."
-        ) from exc
+    graph = None
+    if demo or snapshot:
+        from .snapshot import SnapshotCatalog
 
-    catalog = DataHubCatalog(
-        graph, platform=platform, env=env_, platform_instance=platform_instance
-    )
+        try:
+            catalog = SnapshotCatalog.load(snapshot)
+        except FileNotFoundError as exc:
+            raise click.ClickException(
+                f"No snapshot at {snapshot or 'the bundled path'}. "
+                "Build one with `plumbline snapshot --server <url>`."
+            ) from exc
+        # Said out loud, every run. The findings below are real, and the
+        # catalog behind them is frozen and is not the reader's warehouse.
+        click.echo(f"Reading a {catalog.describe()}.", err=True)
+        click.echo(
+            "This is not a live catalog. Drop --demo and pass --server to "
+            "check against your own.\n",
+            err=True,
+        )
+        if publish:
+            raise click.ClickException(
+                "--publish needs a live catalog to write to; --demo is read-only."
+            )
+    else:
+        try:
+            graph = _connect(server, token)
+        except Exception as exc:  # noqa: BLE001
+            raise click.ClickException(
+                f"Could not connect to DataHub: {exc}\n"
+                "Set --server (or DATAHUB_GMS_URL), or run `datahub init` first.\n"
+                "To see the tool work without a catalog, use --demo."
+            ) from exc
+
+        catalog = DataHubCatalog(
+            graph, platform=platform, env=env_, platform_instance=platform_instance
+        )
     enabled = list(checks_) if checks_ else list(ALL_CHECKS)
 
     report = Report()
@@ -360,6 +403,37 @@ def check(
         counts = report.counts
         sys.exit(1 if counts["error"] or counts["warn"] else 0)
     sys.exit(report.exit_code)
+
+
+@main.command()
+@click.option("--server", envvar="DATAHUB_GMS_URL", required=True, help="DataHub GMS URL.")
+@click.option("--token", envvar="DATAHUB_GMS_TOKEN", help="DataHub access token.")
+@click.option("--platform", default="snowflake", show_default=True)
+@click.option("--env", "env_", default="PROD", show_default=True)
+@click.option("--platform-instance", default=None)
+@click.option("--out", type=click.Path(dir_okay=False), default=None,
+              help="Where to write the snapshot. Defaults to the bundled path.")
+def snapshot(server, token, platform, env_, platform_instance, out):
+    """Freeze a live catalog to a file, so `check --demo` has something to read.
+
+    Captures only what the checks consume: schemas, column tags, deprecation,
+    lineage and query text. Not a general metadata export.
+    """
+    import json
+
+    from .snapshot import DEFAULT_SNAPSHOT, export
+
+    graph = _connect(server, token)
+    data = export(graph, platform, env_, platform_instance)
+    target = out or DEFAULT_SNAPSHOT
+    os.makedirs(os.path.dirname(target), exist_ok=True)
+    with open(target, "w", encoding="utf-8") as fh:
+        json.dump(data, fh, indent=1, sort_keys=True)
+    columns = sum(len(t["columns"]) for t in data["tables"].values())
+    click.echo(
+        f"Wrote {target}: {len(data['tables'])} datasets, {columns} columns, "
+        f"{len(data['queries'])} with query history."
+    )
 
 
 if __name__ == "__main__":
