@@ -19,7 +19,26 @@ Plumbline: 1 error, 1 warning, 0 unknown, 1 info across 1 file(s).
       Evidence: urn:li:dataset:(urn:li:dataPlatform:snowflake,...customers,PROD)
 ```
 
-Exit code 1. The pull request does not merge.
+Exit code 1. The pull request does not merge. With `--publish`, the verdict
+goes back into DataHub as an assertion on the dataset, so the next agent
+inherits what this run proved instead of rediscovering it.
+
+## Why this belongs in the code-generation track
+
+Because generation without verification is the open half of that loop. An
+agent that writes production data code and cannot check its own references
+against the catalog is not finished, it is unattended. Plumbline closes the
+loop: it verifies what a generating agent produced, and when a reference is
+wrong its own repair agent generates the correction, which the deterministic
+layer then has to accept before anyone sees it.
+
+**It is not sqlfluff with a dbt manifest.** A linter checks style, and a
+manifest only knows what dbt owns. Neither knows that a source is marked
+deprecated, that a column carries a PII tag, that a join key pair appears in
+no query anyone has ever run, or that thirty-four dashboards read the table
+you are about to rewrite. None of that lives in your repository, and a
+manifest cannot check SQL that is not in a dbt project yet, which is exactly
+where machine-written code arrives.
 
 ## The problem
 
@@ -48,6 +67,48 @@ None of that is visible in the diff. All of it is visible in the catalog.
 | PII propagation | PII-tagged column flowing into an untagged output | Warning |
 | Unvetted join | Join key pair seen in no observed production query | Warning |
 | Blast radius | Who consumes the asset this statement rewrites | Info |
+
+## It reads the catalog for truth, and writes the verdict back
+
+Reading is only half of a graph. With `--publish`, every dataset the run
+reached a conclusion about gets a DataHub **assertion** carrying that
+conclusion, visible on the dataset's Validation tab with its run history:
+
+```
+$ plumbline check models/ --publish
+Published 20 assertion(s) to DataHub: 16 passing, 4 failing.
+```
+
+```
+plumbline:phantom_column     FAILURE   Column `credit_limt` does not exist
+plumbline:pii_propagation    ERROR     PII column `customer_id` flows into CUSTOMER_REVENUE
+plumbline:deprecated_source  SUCCESS
+plumbline:unvetted_join      SUCCESS
+plumbline:phantom_table      SUCCESS
+```
+
+Three decisions in there are worth stating, because each one is a restraint
+rather than a feature:
+
+**Only the deterministic layer may write.** The agent reaches DataHub through
+the MCP server with mutation tools forced off, and it is never handed a
+publishing path. So the one component allowed to change the catalog is the one
+that cannot hallucinate. A model that can invent a column must not be able to
+record a judgment about one.
+
+**Clean datasets get a passing assertion, not silence.** A record that only
+appears on failure says nothing about what was checked and found fine, and "no
+news" is not the same as "checked and clean".
+
+**It is off by default.** A checker that silently edits a shared catalog the
+first time somebody tries it has taken a liberty it was not granted. CI turns
+it on knowingly. If the catalog refuses the write, the run says so and the
+report still stands: publishing is a side effect, never the point.
+
+Assertion ids are derived from the dataset and the check, so re-running
+updates one assertion and appends to its history rather than littering the
+dataset with a new one every time CI fires. Verified: two runs leave 5
+assertions with 2 run events each, not 10 assertions.
 
 ## The design decision that matters
 
@@ -122,8 +183,24 @@ Checks that did not run:
 
 ## Measured results
 
-Two harnesses, both reproducible against the public `showcase-ecommerce`
-datapack (67 datasets, 816 columns).
+Read this section in the order it is written, because the strongest number is
+not the most impressive one.
+
+**What the evidence actually supports.** The number that decides whether a
+checker survives contact with a team is its false positive rate, and on 66
+queries that are valid by construction it raised **zero** blocking errors. On
+6 real view definitions this project did not write, taken out of the catalog,
+it also raised **zero**. Those are the claims worth making.
+
+**What it does not support.** The recall figure below is a self-graded exam:
+defects this project injected, into queries this project generated, from the
+catalog's own schemas, of exactly the three kinds Plumbline targets. A perfect
+score there means the resolution logic is sound. It is not evidence about the
+full space of things a language model gets wrong, and anyone reading it as
+such is reading it wrong.
+
+Both harnesses run against the public `showcase-ecommerce` datapack
+(67 datasets, 816 columns).
 
 ### Precision and recall on a constructed benchmark
 

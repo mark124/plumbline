@@ -204,6 +204,23 @@ def main() -> None:
     default=None,
     help="Model for --fix. Defaults to the agent's own default.",
 )
+@click.option(
+    "--publish",
+    is_flag=True,
+    help=(
+        "Record this run's verdict back to DataHub as an assertion on each "
+        "dataset, so the conclusion joins the graph instead of scrolling past "
+        "in a CI log. Written by the deterministic layer only; the agent "
+        "cannot reach it. Off by default because a checker should not edit a "
+        "shared catalog uninvited."
+    ),
+)
+@click.option(
+    "--run-url",
+    default=None,
+    envvar="PLUMBLINE_RUN_URL",
+    help="Link recorded on published assertions, e.g. the CI run that produced them.",
+)
 def check(
     paths,
     server,
@@ -220,6 +237,8 @@ def check(
     checks_,
     fix,
     model,
+    publish,
+    run_url,
 ):
     """Check SQL files against the catalog."""
     files = _expand(paths)
@@ -247,6 +266,10 @@ def check(
     # Keep each statement alongside the findings it produced, so the fix agent
     # can be handed the exact text a finding refers to.
     statements: List = []
+    # Datasets this run actually resolved. Needed for --publish: an assertion
+    # that only ever appears on failure says nothing about the datasets that
+    # were fine, and "no news" is not the same as "checked and clean".
+    resolved_urns: List[str] = []
     for path in files:
         # utf-8-sig strips a byte order mark if one is present. Editors and
         # shells on Windows write them by default, and a leading BOM makes the
@@ -270,6 +293,9 @@ def check(
                     line_offset=first_line - 1,
                 )
                 run_all(parsed, catalog, report, enabled=enabled)
+                for ref in parsed.tables:
+                    if ref.exists and ref.urn not in resolved_urns:
+                        resolved_urns.append(ref.urn)
             except CatalogUnavailable as exc:
                 # Deliberately not a partial report. Findings gathered before
                 # the catalog went away are fine, but the ones after it would
@@ -295,6 +321,22 @@ def check(
             database=database,
             schema_=schema_,
         )
+
+    if publish:
+        from .publish import publish as publish_report
+
+        written = publish_report(
+            report, graph, checked_urns=resolved_urns, source_url=run_url
+        )
+        click.echo(
+            f"Published {written.written} assertion(s) to DataHub: "
+            f"{written.passed} passing, {written.failed} failing."
+        )
+        for problem in written.errors:
+            # Publishing is a side effect, never the point. A catalog that
+            # will not take the write must not turn a correct report into a
+            # failed run, so this is said out loud and the report still stands.
+            click.echo(f"  could not publish: {problem}", err=True)
 
     rendered = {
         "text": render_text,
