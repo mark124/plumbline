@@ -184,12 +184,24 @@ def build(
 ) -> Tuple[List[Case], List[Case]]:
     """Return (valid_cases, defective_cases)."""
     rng = random.Random(seed)
-    # Sorted, because the catalog hands tables back in search-result order and
-    # a benchmark whose case set depends on how OpenSearch felt that morning
-    # is not a measurement.
-    usable = sorted(
-        (t for t in tables if len(t.columns) >= 4), key=lambda t: t.fqn.lower()
-    )
+    # Both orderings are normalised here, at the point of use, rather than
+    # trusting the caller to hand them over sorted.
+    #
+    # Tables: the catalog returns them in search-result order, and a benchmark
+    # whose case set depends on how OpenSearch felt that morning is not a
+    # measurement.
+    #
+    # Columns: the templates sample with `rng.sample`, which depends on the
+    # order of the sequence it is given. Rebuilding the search index reordered
+    # the fields of some datasets, which changed which columns were picked and
+    # therefore the mix of injected defect kinds. The totals happened not to
+    # move, so comparing only the headline numbers missed it entirely.
+    usable = [
+        dataclasses.replace(t, columns=sorted(t.columns))
+        for t in sorted(
+            (t for t in tables if len(t.columns) >= 4), key=lambda t: t.fqn.lower()
+        )
+    ]
     valid: List[Case] = []
 
     for offset, (tmpl_name, fn) in enumerate(SINGLE_TABLE_TEMPLATES):
@@ -309,11 +321,21 @@ def tables_from_catalog_dump(records: Sequence[Dict], platform: str = "snowflake
         if len(parts) < 4:
             continue
         _instance, database, schema, table = parts[0], parts[1], parts[2], parts[-1]
-        cols = []
+        cols = set()
         for c in r["columns"]:
             leaf = c["path"].split(".")[-1].strip()
-            if leaf and leaf not in cols:
-                cols.append(leaf)
+            if leaf:
+                cols.add(leaf)
         if cols:
-            out.append(Table(database=database, schema=schema, name=table, columns=cols))
+            # Sorted, because the templates sample columns with a seeded RNG
+            # and `rng.sample` depends on the order of what it is given. The
+            # catalog's field order is not a promise: rebuilding the search
+            # index changed it here, which changed which columns the templates
+            # picked, which changed the mix of injected defect kinds. Totals
+            # happened to stay put, so comparing only the headline numbers
+            # missed it. The case set should depend on which tables and
+            # columns exist, never on the order they came back in.
+            out.append(
+                Table(database=database, schema=schema, name=table, columns=sorted(cols))
+            )
     return out
