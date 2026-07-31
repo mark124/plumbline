@@ -132,6 +132,120 @@ def test_a_failing_check_does_not_also_get_a_passing_record():
     assert graph.results_for(assertion_urn(DATASET, Check.PHANTOM_COLUMN)) == ["FAILURE"]
 
 
+def test_a_published_check_can_always_blame_the_dataset_it_asserts_on():
+    """The invariant that two real bugs broke.
+
+    A passing assertion may only be written for a check whose *failures* can
+    be attributed to the same dataset. Otherwise the clean path records
+    "checked and fine" for a check whose failures are silently unpublishable,
+    which is a lie told in the graph rather than in a terminal.
+
+    Both violations were found by asking what happens at the boundary where
+    the conclusion stops being a report and becomes someone else's data:
+
+      phantom_table  cited the *suggested* dataset, so misspelling `ORDRS`
+                     wrote a FAILURE onto the healthy `ORDERS`.
+      unvetted_join  recorded no dataset at all, so a failing join could
+                     never publish while its successes did.
+    """
+    from plumbline.checks import (
+        check_deprecated_sources,
+        check_phantom_columns,
+        check_pii,
+    )
+
+    producers = {
+        Check.PHANTOM_COLUMN: check_phantom_columns,
+        Check.DEPRECATED_SOURCE: check_deprecated_sources,
+        Check.PII_PROPAGATION: check_pii,
+    }
+    assert set(producers) == set(PUBLISHED_CHECKS), (
+        "a check joined the publish set without a case showing its failures "
+        "name the dataset they are about"
+    )
+
+
+def test_a_misspelled_table_never_marks_the_suggested_one(catalog_with_orders):
+    """The bug in full: `ordrs` is the defect, `orders` is innocent."""
+    from plumbline.checks import run_all
+    from plumbline.parse import parse_sql
+
+    report = Report(files_checked=1)
+    parsed = parse_sql(
+        "SELECT order_id FROM analytics.public.ordrs",
+        catalog_with_orders,
+        dialect="snowflake",
+        default_db="analytics",
+        default_schema="public",
+    )
+    run_all(parsed, catalog_with_orders, report)
+    assert report.by_severity(Severity.ERROR), "the typo should still be an error"
+
+    graph = FakeGraph()
+    publish(report, graph)
+    non_passing = [
+        m.aspect.asserteeUrn
+        for m in graph.emitted
+        if type(m.aspect).__name__ == "AssertionRunEventClass"
+        and m.aspect.result.type != "SUCCESS"
+    ]
+    assert non_passing == [], (
+        f"wrote a failure onto {non_passing}, which is a healthy dataset "
+        "cited only as the near-miss suggestion"
+    )
+
+
+@pytest.fixture
+def catalog_with_orders():
+    from tests.fakes import FakeCatalog
+
+    return FakeCatalog(
+        tables={"analytics.public.orders": {"order_id": "NUMBER"}}
+    )
+
+
+def test_an_unknown_is_never_published_as_a_failure(catalog_with_orders):
+    """Severity-as-evidence has to survive crossing into the graph.
+
+    An uningested table is Unknown because the catalog cannot speak to it.
+    Recording that as a failed assertion would break the one rule the whole
+    project rests on, at the point where the conclusion becomes data someone
+    else reads.
+    """
+    from plumbline.checks import run_all
+    from plumbline.parse import parse_sql
+
+    report = Report(files_checked=1)
+    parsed = parse_sql(
+        "SELECT a FROM analytics.public.shipments",
+        catalog_with_orders,
+        dialect="snowflake",
+        default_db="analytics",
+        default_schema="public",
+    )
+    run_all(parsed, catalog_with_orders, report)
+    assert report.by_severity(Severity.UNKNOWN)
+
+    graph = FakeGraph()
+    publish(report, graph)
+    outcomes = [
+        m.aspect.result.type
+        for m in graph.emitted
+        if type(m.aspect).__name__ == "AssertionRunEventClass"
+    ]
+    assert all(o == "SUCCESS" for o in outcomes), outcomes
+
+
+def test_unvetted_join_is_never_published():
+    """Its failures record no dataset, so its successes must not be published
+    either. A pass nobody could have failed is not information."""
+    assert Check.UNVETTED_JOIN not in PUBLISHED_CHECKS
+
+
+def test_phantom_table_is_never_published():
+    assert Check.PHANTOM_TABLE not in PUBLISHED_CHECKS
+
+
 def test_blast_radius_is_never_published():
     """It is context, not a verdict. Asserting on it would mark every dataset
     that merely has consumers as failing."""

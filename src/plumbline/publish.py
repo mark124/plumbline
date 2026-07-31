@@ -40,17 +40,32 @@ logger = logging.getLogger(__name__)
 # even though findings arrive in the negative.
 ASSERTED = {
     Check.PHANTOM_COLUMN: "Every column referenced against this dataset exists in its schema",
-    Check.PHANTOM_TABLE: "This dataset resolves in the catalog",
     Check.DEPRECATED_SOURCE: "No new code reads this dataset while it is marked deprecated",
     Check.PII_PROPAGATION: "No PII-tagged column from this dataset flows into an untagged output",
-    Check.UNVETTED_JOIN: "Joins against this dataset match a pattern seen in query history",
-    Check.BLAST_RADIUS: "Downstream consumers of this dataset are recorded",
 }
 
-# Checks whose result is worth recording. BLAST_RADIUS is context rather than
-# a verdict, so asserting on it would put a permanent "failing" mark on every
-# dataset that simply has consumers.
-PUBLISHED_CHECKS = frozenset(ASSERTED) - {Check.BLAST_RADIUS}
+# A check may only be published when a *failure* of it can be attributed to
+# the dataset the assertion hangs on. Otherwise the clean path would write a
+# passing assertion for a check whose failures are silently unpublishable,
+# which is a lie told in the graph rather than in a terminal. Three checks are
+# excluded, each for its own reason:
+#
+#   BLAST_RADIUS   Context, not a verdict. Asserting on it would put a
+#                  permanent failing mark on every dataset that has consumers.
+#
+#   PHANTOM_TABLE  Its evidence URN names the *suggested* dataset, not the
+#                  misspelled one, because the missing table has no URN to
+#                  cite. Publishing it marked a healthy dataset as failing
+#                  because a different name was mistyped somewhere. An absent
+#                  table has nothing in the graph to assert against, and
+#                  "this dataset resolves in the catalog" is vacuous for a
+#                  dataset that is in the catalog.
+#
+#   UNVETTED_JOIN  A join concerns two datasets and the finding records
+#                  neither, so a failing join cannot be published at all.
+#                  Publishing only its successes would state that joins are
+#                  fine on a run where a join warning fired.
+PUBLISHED_CHECKS = frozenset(ASSERTED)
 
 
 @dataclasses.dataclass

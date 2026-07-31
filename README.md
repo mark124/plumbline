@@ -99,16 +99,27 @@ conclusion, visible on the dataset's Validation tab with its run history:
 
 ```
 $ plumbline check models/ --publish
-Published 20 assertion(s) to DataHub: 16 passing, 4 failing.
+Published 12 assertion(s) to DataHub: 8 passing, 4 failing.
 ```
 
 ```
 plumbline:phantom_column     FAILURE   Column `credit_limt` does not exist
 plumbline:pii_propagation    ERROR     PII column `customer_id` flows into CUSTOMER_REVENUE
 plumbline:deprecated_source  SUCCESS
-plumbline:unvetted_join      SUCCESS
-plumbline:phantom_table      SUCCESS
 ```
+
+Three checks are deliberately **not** published, and the reason is the same
+each time: a passing assertion may only be written for a check whose failures
+can be blamed on that same dataset.
+
+- **Blast radius** is context, not a verdict. Asserting on it would mark every
+  dataset that merely has consumers as failing.
+- **Phantom table** cites the *suggested* dataset, because a missing table has
+  no URN of its own. Publishing it put a failure on a healthy dataset because
+  a different name was mistyped somewhere.
+- **Unvetted join** concerns two datasets and records neither, so its failures
+  cannot be published at all. Publishing only its successes would state that
+  joins were fine on a run where a join warning fired.
 
 Three decisions in there are worth stating, because each one is a restraint
 rather than a feature:
@@ -130,8 +141,11 @@ report still stands: publishing is a side effect, never the point.
 
 Assertion ids are derived from the dataset and the check, so re-running
 updates one assertion and appends to its history rather than littering the
-dataset with a new one every time CI fires. Verified: two runs leave 5
-assertions with 2 run events each, not 10 assertions.
+dataset with a new one every time CI fires. This was measured rather than
+assumed: **six consecutive runs leave three assertions per dataset, each with
+six run events.** The count of assertions is flat and the history grows, which
+is what a Validation tab is for. A rehearsal take before a real take adds a
+row of history, not a duplicate assertion.
 
 ## The design decision that matters
 
@@ -678,14 +692,37 @@ plumbline check examples/novel_join.sql \
 
 ## Contributions made upstream while building this
 
-Building against a real DataHub surfaced two defects in the platform itself,
-both reported upstream:
+Three pull requests, all open and under review at the time of writing. Their
+state is given honestly rather than optimistically: none has been merged, and
+none has had a maintainer review yet.
 
-1. `datahub datapack load` fails on Windows. `get_path_schema` parses a path
-   with `urlparse`, so `C:\...` yields the scheme `"c"` and the filesystem
-   registry lookup raises `KeyError`. One-line fix.
-2. `datahub datapack --help` raises `FileNotFoundError`: the package ships
-   without `cli/datapack/resources/DATAPACK_AGENT_CONTEXT.md`.
+| PR | What it does | State |
+| --- | --- | --- |
+| [datahub-project/datahub#18634](https://github.com/datahub-project/datahub/pull/18634) | Fixes `datahub datapack load` on Windows | Submitted, under review |
+| [datahub-project/datahub#18635](https://github.com/datahub-project/datahub/pull/18635) | Fixes `datahub datapack --help` crashing | Submitted, under review |
+| [datahub-project/datahub-skills#57](https://github.com/datahub-project/datahub-skills/pull/57) | Adds a `datahub-sql-review` Skill | Submitted, under review |
+
+**The two platform fixes** came out of running against a real DataHub on
+Windows. `get_path_schema` parses a path with `urlparse`, so `C:\...` yields
+the scheme `"c"` and the filesystem registry lookup raises `KeyError`, which
+makes `datapack load` unusable on Windows entirely. The second ships the
+package without `cli/datapack/resources/DATAPACK_AGENT_CONTEXT.md`, so
+`datahub datapack --help` raises `FileNotFoundError`. Both include tests, and
+for the second the missing file was verified as the cause by removing and
+restoring it.
+
+**The Skill** is the contribution worth reading. `datahub-sql-review` teaches
+a coding agent to check its own SQL against the catalog before proposing it:
+resolve every table and column, read column-level tags and deprecation, and
+say plainly when the catalog cannot answer rather than guessing. It is
+Plumbline's central idea packaged so that it works inside any agent using
+DataHub Skills, without installing Plumbline at all. It passes the repository's
+own prettier and markdownlint configuration.
+
+The two `datahub` pull requests show red CI. That is not from these changes:
+#18634 fails a timing-sensitive throughput test on a shared runner, and #18635
+fails on an unrelated Airbyte install step. `testQuick`, which contains the
+added unit test, passes on both.
 
 ## Licence
 

@@ -20,6 +20,11 @@ plumbline check examples --demo --format html --out report.html
 
 The run finds 2 errors, 4 warnings, 1 unknown and 1 info, and exits 1.
 
+The URNs in these files carry the platform instance `b2fd91`, which is an
+artifact of how this particular datapack was loaded rather than anything
+meaningful. Rebuilding the snapshot from a different instance changes them,
+and the findings stay the same.
+
 Two things in there are worth looking at specifically, because they are the
 argument rather than the feature:
 
