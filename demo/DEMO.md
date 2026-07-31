@@ -6,20 +6,44 @@ shown, so nothing needs to be faked or retaken for correctness.
 
 ## Before you record
 
+**Run this first. It checks every shot below and tells you what is missing.**
+
+```bash
+python demo/preflight.py
+```
+
+It runs each shot's real command against the live catalog and reports
+`ready` or `gap` per shot, with the remedy. Exits 0 when the whole list can
+be recorded. Discovering mid-take that the catalog is down, or that the shot
+needing an API key cannot run, costs a session.
+
+If it reports gaps, the setup is:
+
 ```bash
 # 1. DataHub up with the showcase catalog
 datahub docker quickstart
 datahub datapack load showcase-ecommerce
 
 # 2. The two conditions the datapack lacks (deprecation + query history)
-python demo/seed_demo_catalog.py --server http://localhost:8080
+python demo/seed_demo_catalog.py --server $DATAHUB_GMS_URL
 
-# 3. Point Plumbline at it
-export DATAHUB_GMS_URL=http://localhost:8080
+# 3. Point Plumbline at it. On this machine GMS is on 8081, not the
+#    default 8080, because another service holds 8080.
+export DATAHUB_GMS_URL=http://localhost:8081
+
+# 4. Shot 4 only. Without this the agent shot cannot be recorded.
+export ANTHROPIC_API_KEY=...
 ```
 
-On the machine this was built on, GMS is remapped to `http://localhost:8081`
-because another service holds 8080. Use whichever is right for you.
+Two things that will waste your time if you do not know them:
+
+**`datahub docker quickstart` reports failure on Windows even when it
+succeeds.** It brings the whole stack up and then dies printing its own
+success banner, because a tick character cannot be encoded when stdout is
+redirected. Check container health, never the exit code.
+
+**Every command in this script assumes `DATAHUB_GMS_URL` is exported.**
+Without it you get a connection error rather than a report, on camera.
 
 Terminal: widen it to about 110 columns so the findings do not wrap, and turn
 the font up. The output is the product; it has to be readable at 1080p.
