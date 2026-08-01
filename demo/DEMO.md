@@ -150,15 +150,25 @@ End here. This is the shot that makes a data lead think "I would merge this".
 
 Open https://github.com/mark124/plumbline/pull/1 in a browser.
 
-- Unit tests green.
+- Unit tests green: 3.10, 3.11, 3.12.
 - The catalog gate **red**.
-- The bot comment naming the bad column, the real column, and the URN.
+- The bot comment naming the bad column, the file and line, the real column,
+  and the catalog URN that proves it.
+- Scroll to the bottom: **"Merging is blocked"**, with the merge button
+  disabled.
 
 > "That gate stood a real DataHub up inside the GitHub runner, loaded the
 > catalog, and checked the diff against it. No hosted instance, nothing
 > mocked."
 
-Let the red X sit on screen for a beat before cutting.
+Let the red X and the disabled merge button sit on screen together for a beat
+before cutting. That pairing is the whole argument.
+
+`master` has branch protection requiring the `gate` check, which is what makes
+the button disabled rather than merely warned about. Before it was added the
+page showed a red X next to a live merge button, which would have contradicted
+the narration in the same frame. Admin bypass is on, so you can still merge
+your own work when you need to.
 
 ---
 
