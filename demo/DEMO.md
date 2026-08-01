@@ -136,13 +136,40 @@ This is the most credible thing in the video. Say it plainly and move on.
 plumbline check models/ --platform-instance b2fd91 --publish
 ```
 
-Then switch to the DataHub UI, open the dataset, and go to the **Validation**
-tab. The assertions are there with their run history.
+Then switch to the DataHub UI and open the dataset:
+
+```
+http://localhost:9002/dataset/<urn>/Quality
+```
+
+**The tab is "Quality", not "Validation".** DataHub 1.6 renamed it, and the
+assertions live under an **Assertions** sub-tab inside it. Filming from an
+older script means hunting for a tab that does not exist.
+
+Two beats, about four seconds apart:
+
+1. **Quality > Summary.** `PLUMBLINE:PHANTOM_COLUMN` failing,
+   `PLUMBLINE:PII_PROPAGATION` error, sitting beside the dataset's owners, its
+   domain, its data product and its glossary terms. That adjacency is the
+   argument: the verdict is catalog metadata now, not a line in a log.
+2. **Click Assertions.** The chips read `Failing (1) Error (1) Passing (1)`
+   and each check is stated as a claim in plain English.
+
+Point at the **passing** one. It is doing more work than the red ones.
 
 > "It reads the catalog to find out what is true, and writes back what it
 > concluded. The next agent inherits it. Only the deterministic layer can
 > write: the one component allowed to change the catalog is the one that
 > cannot hallucinate."
+
+Reference frames for both beats are in `docs/screenshots/`.
+
+If the UI will not load, GMS is probably still warming up or was killed. It
+has been OOM-killed once on 8 GB of Docker memory, and a dead GMS is also why
+the frontend login fails with "Failed to generate session token": the service
+that mints them is down. `docker start datahub-datahub-gms-quickstart-1`,
+wait about a minute, and it comes back. The Quality tab is heavy, so give it a
+few seconds after GMS reports healthy before expecting it to render.
 
 ## Shot 7: it blocks a real pull request (about 30 seconds)
 
