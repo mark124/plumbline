@@ -218,6 +218,8 @@ ships with the repository. Same checker, same six checks, same report; only
 the source of the facts changes. Nothing is simulated, and every run states
 that the catalog is frozen.
 
+**Demo video (1:40):** https://youtu.be/g2X3Hx4P_U4
+
 **See it block a real pull request:**
 https://github.com/mark124/plumbline/pull/1
 
@@ -266,5 +268,7 @@ yet, stated plainly rather than optimistically.
   injected, into queries we generated, of exactly the kinds we target. It is
   in the README with that caveat attached and it belongs nowhere near the
   headline.
-- The video is under 3 minutes and ends on the red pull request gate.
+- The video is 1:40 and public: https://youtu.be/g2X3Hx4P_U4
+  It shows the blocked pull request at 1:14 and closes on a card giving
+  the repository URL and the thirty-second `--demo` path.
 - Sample outputs are recommended by the rules and are in `docs/samples/`.

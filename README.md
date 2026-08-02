@@ -23,6 +23,8 @@ Exit code 1. The pull request does not merge. With `--publish`, the verdict
 goes back into DataHub as an assertion on the dataset, so the next agent
 inherits what this run proved instead of rediscovering it.
 
+**Demo video (1:40):** https://youtu.be/g2X3Hx4P_U4
+
 ## Try it in thirty seconds, without a catalog
 
 ```bash

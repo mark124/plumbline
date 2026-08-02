@@ -20,3 +20,6 @@ plumbline-report.html
 
 # Throwaway probe scripts. Anything they found that matters lives in tests/.
 scratchpad/
+
+# The demo video lives on YouTube; this is the local master.
+demo/plumbline-demo.mp4

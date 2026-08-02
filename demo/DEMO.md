@@ -1,5 +1,12 @@
 # Demo script
 
+> **Recorded and published: https://youtu.be/g2X3Hx4P_U4** (1:40)
+>
+> Shots 1, 2, 3, 5 and the closing card were captured from the terminal;
+> shots 6 and 7 are the frames in `docs/screenshots/`. Shot 4, the agent
+> repair, is not in the cut: the catalog was unreachable when it was due
+> to be captured. The script below is kept for re-shoots.
+
 A shot list for the submission video. Target is under 3 minutes, which is the
 hackathon limit. Every command below has been run and produces the output
 shown, so nothing needs to be faked or retaken for correctness.
